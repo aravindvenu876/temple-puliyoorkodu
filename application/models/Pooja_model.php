@@ -153,11 +153,10 @@ class Pooja_model extends CI_Model {
         //* Array of database columns which should be read and sent back to DataTables. Use a space where
         //* you want to insert a non-database field (for example a counter or static image)
         if($language == '1'){
-            $aColumns = array('id', 'id', 'pooja_name_eng', 'category_eng', 'rate', 'website_pooja', 'ledger_name', 'status');
+            $aColumns = array('id', 'id', 'pooja_name_eng', 'category_eng', 'rate', 'type', 'daily_pooja', 'quantity_pooja', 'website_pooja', 'status');
         }else{
-            $aColumns = array('id', 'id', 'pooja_name_alt', 'category_alt', 'rate', 'website_pooja', 'ledger_name', 'status');
+            $aColumns = array('id', 'id', 'pooja_name_alt', 'category_alt', 'rate', 'type', 'daily_pooja', 'quantity_pooja', 'website_pooja', 'status');
         }
-
         // Paging
         if (isset($iDisplayStart) && $iDisplayLength != '-1') {
             $this->db->limit($this->db->escape_str($iDisplayLength), $this->db->escape_str($iDisplayStart));
@@ -193,23 +192,19 @@ class Pooja_model extends CI_Model {
             $this->db->where($string);
         }
         $this->db->where('temple_id', $temple);
-        if($filter['poojaCategory'] != ''){
+        if($filter['poojaCategory'] != '')
             $this->db->where('pooja_category_id',$filter['poojaCategory']);
-        }
-        if($filter['poojaDaily'] != ''){
+        if($filter['poojaDaily'] != '')
             $this->db->where('daily_pooja',$filter['poojaDaily']);
-        }
         if($filter['poojaName'] != ''){
-            if($language == 1){
+            if($language == 1)
                 $this->db->like('lower(pooja_name_eng)',strtolower($filter['poojaName']));
-            }else{
+            else
                 $this->db->like('pooja_name_alt',$filter['poojaName']);
-            }
         }
         $this->db->order_by('id', 'DESC');
         $this->db->select('SQL_CALC_FOUND_ROWS ' . str_replace(' , ', ' ', implode(', ', $aColumns)), FALSE);
         $rResult = $this->db->get($sTable);
-      //   return $this->db->last_query();
         // Data set length after filtering
         $this->db->select('FOUND_ROWS() AS found_rows');
         $iFilteredTotal = $this->db->get()->row()->found_rows;
@@ -525,34 +520,15 @@ class Pooja_model extends CI_Model {
         return $this->db->get()->result();
 	}
 
-    function add_pooja_data($poojaData, $ledgerId, $poojaDataLang, $poojaAssetMappingData, $poojaPrasadmMappingData){
+    function add_pooja_data($poojaData, $poojaDataLang){
         $this->db->trans_start();
 		$this->db->trans_strict();
         $this->db->insert('pooja_master', $poojaData);
         $poojaId = $this->db->insert_id();
-        $head_mapping = array(
-            'accounting_head_id'=> $ledgerId,
-            'table_id'          => 1,
-            'mapped_head_id'    => $poojaId
-        );
-        $this->db->insert('accounting_head_mapping', $head_mapping);
         if(!empty($poojaDataLang)){
-            foreach($poojaDataLang as $key => $row){
+            foreach($poojaDataLang as $key => $row)
                 $poojaDataLang[$key]['pooja_master_id'] = $poojaId;
-            }
             $this->db->insert_batch('pooja_master_lang', $poojaDataLang);
-        }
-        if(!empty($poojaAssetMappingData)){
-            foreach($poojaAssetMappingData as $key => $row){
-                $poojaAssetMappingData[$key]['pooja_id'] = $poojaId;
-            }
-            $this->db->insert_batch('pooja_asset_mapping', $poojaAssetMappingData);
-        }
-        if(!empty($poojaPrasadmMappingData)){
-            foreach($poojaPrasadmMappingData as $key => $row){
-                $poojaPrasadmMappingData[$key]['pooja_id'] = $poojaId;
-            }
-            $this->db->insert_batch('pooja_prasadam_mapping', $poojaPrasadmMappingData);
         }
 		$this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
@@ -564,32 +540,13 @@ class Pooja_model extends CI_Model {
 		}
     }
 
-    function update_pooja_data($poojaId, $poojaData, $ledgerId, $poojaDataLang, $poojaAssetMappingData, $poojaPrasadmMappingData){
+    function update_pooja_data($poojaId, $poojaData, $poojaDataLang){
         $this->db->trans_start();
 		$this->db->trans_strict();
         $this->db->where('id', $poojaId)->update('pooja_master', $poojaData);
-        $headMapping = array('accounting_head_id'=> $ledgerId, 'table_id' => 1, 'mapped_head_id' => $poojaId);
-        $headMappingSearch = array('table_id' => 1, 'mapped_head_id' => $poojaId, 'status' => 1);
-        $accountingHeadMapping = $this->db->where($headMappingSearch)->get('accounting_head_mapping')->row_array();
-        if(!empty($accountingHeadMapping)){
-            if($accountingHeadMapping['accounting_head_id'] != $ledgerId){
-                $this->db->where('id',$accountingHeadMapping['id'])->update('accounting_head_mapping', array('status' => 0));
-                $this->db->insert('accounting_head_mapping', $headMapping);
-            }
-        } else {
-            $this->db->insert('accounting_head_mapping', $headMapping);
-        }
         if(!empty($poojaDataLang)){
             $this->db->where('pooja_master_id', $poojaId)->delete('pooja_master_lang');
             $this->db->insert_batch('pooja_master_lang', $poojaDataLang);
-        }
-        if(!empty($poojaAssetMappingData)){
-            $this->db->where('pooja_id', $poojaId)->delete('pooja_asset_mapping');
-            $this->db->insert_batch('pooja_asset_mapping', $poojaAssetMappingData);
-        }
-        if(!empty($poojaPrasadmMappingData)){
-            $this->db->where('pooja_id', $poojaId)->delete('pooja_prasadam_mapping');
-            $this->db->insert_batch('pooja_prasadam_mapping', $poojaPrasadmMappingData);
         }
 		$this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {

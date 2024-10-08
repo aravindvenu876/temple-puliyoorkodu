@@ -56,13 +56,8 @@ class Asset_data extends REST_Controller {
         $assetData['type'] = $this->input->post('type');
         $assetData['unit'] = $this->input->post('unit');
         $assetData['price'] = $this->input->post('price');
-        $assetData['rent_price'] = $this->input->post('rent_price');
         $accountHead    = $this->input->post('account_name1');
         $asset_id = $this->Stock_model->insert_assets($assetData,$accountHead);
-        if (!$asset_id) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
         $assetDataLang = array();
         $assetDataLang['asset_master_id'] = $asset_id;
         $assetDataLang['asset_name'] = $this->input->post('asset_eng');
@@ -116,9 +111,7 @@ class Asset_data extends REST_Controller {
         $assetData['type'] = $this->input->post('type');
         $assetData['unit'] = $this->input->post('unit');
         $assetData['price'] = $this->input->post('price');
-        $assetData['rent_price'] = $this->input->post('rent_price');
-        $accountHead    = $this->input->post('account_name1');
-        if($this->Stock_model->update_assets($asset_id,$assetData,$accountHead)){
+        if($this->Stock_model->update_assets($asset_id,$assetData)){
             if($this->Stock_model->delete_assets_lang($asset_id)){
                 $assetDataLang = array();
                 $assetDataLang['asset_master_id'] = $asset_id;

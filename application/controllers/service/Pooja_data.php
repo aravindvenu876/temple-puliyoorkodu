@@ -39,98 +39,40 @@ class Pooja_data extends REST_Controller {
 
     function pooja_add_post(){
         //Checking english pooja name exist or not
-        $conditionArray = array(
-            'pooja_name_eng'=> $this->input->post('pooja_eng'),
-            'temple_id'     => $this->templeId
-        );
+        $conditionArray = array( 'pooja_name_eng'=> $this->input->post('pooja_eng'), 'temple_id' => $this->templeId);
         if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_poojas', $conditionArray)){
             echo json_encode(['message' => 'error','viewMessage' => 'Pooja Name(In English) already exist']);
             return;
         }
         //Checking alt pooja name exist or not
-        $conditionArray = array(
-            'pooja_name_alt'=> $this->input->post('pooja_alt'),
-            'temple_id'     => $this->templeId
-        );
+        $conditionArray = array('pooja_name_alt'=> $this->input->post('pooja_alt'), 'temple_id' => $this->templeId);
         if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_poojas',$conditionArray)){
             echo json_encode(['message' => 'error','viewMessage' => 'Pooja Name(In Alternate) already exist']);
             return;
         }
-        //Pooja asset mapping data
-        $poojaAssetMappingData = [];
-        $count = $this->input->post('count');
-        if($count > 0){
-            for($i=1;$i<=$count;$i++){
-                if($this->input->post('asset_'.$i) !== null){
-                    if($this->input->post('asset_'.$i) != ""){
-                        $poojaAssetMappingData[] = array(
-                            'type'      => 'pooja',
-                            'asset_id'  => $this->input->post('asset_'.$i),
-                            'quantity'  => $this->input->post('quantity_'.$i)
-                        );
-                    }
-                }
-            }
-        }
-        //Pooja prasadam mapping data
-        $poojaPrasadmMappingData = [];
-        $prasadamCount = $this->input->post('prasadam_count');
-        if($prasadamCount > 0){
-            for($i=1;$i<=$prasadamCount;$i++){
-                if($this->input->post('prasadam_'.$i) !== null){
-                    if($this->input->post('prasadam_'.$i) != ""){
-                        $poojaPrasadmMappingData[] = array('item_id' => $this->input->post('prasadam_'.$i));
-                    }
-                }
-            }
-        }
-        $prasadam_check = 0;
-        if(count($poojaPrasadmMappingData) > 0){
-            $prasadam_check = 1;
-        }
-        //Account Ledger
-        $accountHead = $this->input->post('account_name1');
         //Pooja Master Data
         $poojaData = array(
-            'temple_id'         => $this->templeId,
+            'temple_id' => $this->templeId,
             'pooja_category_id' => $this->input->post('category'),
-            'rate'              => $this->input->post('rate'),
-            'type'              => $this->input->post('type'),
-            'daily_pooja'       => $this->input->post('daily_pooja'),
-            'prasadam_check'    => $prasadam_check,
-            'kudumba_pooja'     => $this->input->post('kudumba_pooja'),
-            'endowment_pooja'   => $this->input->post('endowment_pooja'),
-            'quantity_pooja'    => $this->input->post('quantity_pooja'),
-            'advance_pooja'     => $this->input->post('advance_pooja'),
-            'vavu_pooja'        => $this->input->post('vavu_pooja'),
-            'ayilya_pooja'      => $this->input->post('ayilya_pooja'),
-            'two_devotee_pooja' => $this->input->post('two_devotee_pooja'),
-            'death_person_pooja'=> $this->input->post('death_person_pooja'),
-            'house_name_pooja'  => $this->input->post('house_name_pooja'),
-            'alive_person_pooja'=> $this->input->post('alive_person_pooja'),
-            'thiruvonam_pooja'  => $this->input->post('thiruvonam_pooja'),
-            'sunday_pooja'      => $this->input->post('sunday_pooja'),
-            'monday_pooja'      => $this->input->post('monday_pooja'),
-            'tuesday_pooja'     => $this->input->post('tuesday_pooja'),
-            'wednesday_pooja'   => $this->input->post('wednesday_pooja'),
-            'thursday_pooja'    => $this->input->post('thursday_pooja'),
-            'friday_pooja'      => $this->input->post('friday_pooja'),
-            'saturday_pooja'    => $this->input->post('saturday_pooja'),
-            'website_pooja'     => $this->input->post('website_pooja')
+            'rate' => $this->input->post('rate'),
+            'type' => $this->input->post('type'),
+            'daily_pooja' => $this->input->post('daily_pooja'),
+            'quantity_pooja' => $this->input->post('quantity_pooja'),
+            'website_pooja' => $this->input->post('website_pooja')
         );
         //Pooja lang data
         $poojaDataLang = [];
         $poojaDataLang[] = array(
-            'pooja_name'    => $this->input->post('pooja_eng'),
-            'description'   => $this->input->post('description_eng'),
-            'lang_id'       => 1
+            'pooja_name' => $this->input->post('pooja_eng'),
+            'description' => $this->input->post('description_eng'),
+            'lang_id' => 1
         );
         $poojaDataLang[] = array(
-            'pooja_name'    => $this->input->post('pooja_alt'),
-            'description'   => $this->input->post('description_alt'),
-            'lang_id'       => 2
+            'pooja_name' => $this->input->post('pooja_alt'),
+            'description' => $this->input->post('description_alt'),
+            'lang_id' => 2
         );
-        if($this->Pooja_model->add_pooja_data($poojaData, $accountHead, $poojaDataLang, $poojaAssetMappingData, $poojaPrasadmMappingData)){
+        if($this->Pooja_model->add_pooja_data($poojaData, $poojaDataLang)){
             echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'pooja']);
             return;
         }else{

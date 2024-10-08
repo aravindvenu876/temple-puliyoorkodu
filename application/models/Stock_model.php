@@ -14,9 +14,9 @@ class Stock_model extends CI_Model {
         //* Array of database columns which should be read and sent back to DataTables. Use a space where
         //* you want to insert a non-database field (for example a counter or static image)
         if($language == '1'){
-            $aColumns = array('id', 'id', 'name_eng', 'category_eng', 'type', 'ledger_name', 'price', 'rent_price', 'quantity_available', 'quantity_used', 'quantity_damaged_returned', 'status', 'notation');
+            $aColumns = array('id', 'id', 'name_eng', 'category_eng', 'type', 'price', 'status', 'notation');
         }else{
-            $aColumns = array('id', 'id', 'name_alt', 'category_alt', 'type', 'ledger_name', 'price', 'rent_price', 'quantity_available', 'quantity_used', 'quantity_damaged_returned', 'status', 'notation');
+            $aColumns = array('id', 'id', 'name_alt', 'category_alt', 'type', 'price', 'status', 'notation');
         }
 
         // Paging
@@ -98,12 +98,12 @@ class Stock_model extends CI_Model {
 		$this->db->trans_strict();
         $this->db->insert('asset_master', $data);
         $last_id = $this->db->insert_id();
-        $head_mapping = array(
-            'accounting_head_id'=> $ledgerId,
-            'table_id'          => 2,
-            'mapped_head_id'    => $last_id
-        );
-        $this->db->insert('accounting_head_mapping',$head_mapping);
+        // $head_mapping = array(
+        //     'accounting_head_id'=> $ledgerId,
+        //     'table_id'          => 2,
+        //     'mapped_head_id'    => $last_id
+        // );
+        // $this->db->insert('accounting_head_mapping',$head_mapping);
 		$this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
 			$this->db->trans_rollback();
@@ -123,31 +123,31 @@ class Stock_model extends CI_Model {
         return $this->db->select('*')->where('id', $id)->get('view_assets')->row_array();
     }
 
-    function update_assets($id,$data,$ledgerId){
+    function update_assets($id,$data){
         $this->db->trans_start();
 		$this->db->trans_strict();
         $this->db->where('id',$id)->update('asset_master', $data);
-        $headMapping = array(
-            'accounting_head_id'=> $ledgerId,
-            'table_id'          => 2,
-            'mapped_head_id'    => $id
-        );
+        // $headMapping = array(
+        //     'accounting_head_id'=> $ledgerId,
+        //     'table_id'          => 2,
+        //     'mapped_head_id'    => $id
+        // );
 
-        $headMappingSearch = array('table_id' => 2, 'mapped_head_id' => $id, 'status' => 1);
+        // $headMappingSearch = array('table_id' => 2, 'mapped_head_id' => $id, 'status' => 1);
 
-        $accountingHeadMapping = $this->db->select('*')->where($headMappingSearch)->get('accounting_head_mapping')->row_array();
-        // echo "<pre>"; print_r($accountingHeadMapping['accounting_head_id']); exit;
-        if(!empty($accountingHeadMapping)){
-            // echo "<pre>"; print_r($accountingHeadMapping['id']); exit;
-            if($accountingHeadMapping['accounting_head_id'] != $ledgerId){
-                // echo "<pre>"; print_r($ledgerId); exit;
-                $status = array('status' => 0);
-                $this->db->where('id',$accountingHeadMapping['id'])->update('accounting_head_mapping', $status);
-                $this->db->insert('accounting_head_mapping', $headMapping);
-            }
-        } else {
-            $this->db->insert('accounting_head_mapping', $headMapping);
-        }
+        // $accountingHeadMapping = $this->db->select('*')->where($headMappingSearch)->get('accounting_head_mapping')->row_array();
+        // // echo "<pre>"; print_r($accountingHeadMapping['accounting_head_id']); exit;
+        // if(!empty($accountingHeadMapping)){
+        //     // echo "<pre>"; print_r($accountingHeadMapping['id']); exit;
+        //     if($accountingHeadMapping['accounting_head_id'] != $ledgerId){
+        //         // echo "<pre>"; print_r($ledgerId); exit;
+        //         $status = array('status' => 0);
+        //         $this->db->where('id',$accountingHeadMapping['id'])->update('accounting_head_mapping', $status);
+        //         $this->db->insert('accounting_head_mapping', $headMapping);
+        //     }
+        // } else {
+        //     $this->db->insert('accounting_head_mapping', $headMapping);
+        // }
         $this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
 			$this->db->trans_rollback();

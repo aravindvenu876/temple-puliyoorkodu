@@ -43,18 +43,6 @@
                                                         <input type="number" min="0.0" step="0.1" name="price" id="price" class="form-control parsley-validated rate" data-required="true" autocomplete="off" placeholder="Price">
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-                                                    <span class="span_label "><?php echo $this->lang->line('rentprice_unit'); ?><span class="asterisk">*</span></span>
-                                                    <div class="form-group">
-                                                        <input type="number" min="0.0" step="0.1" name="rent_price" id="rent_price" class="form-control parsley-validated rate" data-required="true" autocomplete="off" placeholder="Rent price">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12"> 
-                                                    <span class="span_label "><?php echo $this->lang->line('account_ledger'); ?> <span class="asterisk">*</span></span>
-                                                    <div class="form-group accountselect">
-                                                        <select name="account_name1" id="account_name1" class="form-control parsley-validated" data-required="true"></select>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="row ">
                                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -120,12 +108,7 @@
                                                         <th><?php echo $this->lang->line('asset'); ?></th>
                                                         <th><?php echo $this->lang->line('asset_category'); ?></th>
                                                         <th><?php echo $this->lang->line('asset_type'); ?></th>
-                                                        <th>Ledger</th>
                                                         <th><?php echo $this->lang->line('price'); ?></th>
-                                                        <th><?php echo $this->lang->line('rent_price'); ?></th>
-                                                        <th><?php echo $this->lang->line('current_stock'); ?></th>
-                                                        <th><?php echo $this->lang->line('used'); ?></th>
-                                                        <th><?php echo $this->lang->line('damaged_returned'); ?></th>
                                                         <th><?php echo $this->lang->line('status'); ?></th>
                                                         <th><?php echo $this->lang->line('action'); ?></th>
                                                     </tr>

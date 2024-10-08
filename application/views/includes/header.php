@@ -151,7 +151,7 @@
    <section class="breadcrumb_section">
       <div class="container-fluid">
          <ol class="breadcrumb bg-light">
-            <li class="breadcrumb-item"><a href="<?php echo base_url().$mainMenuLabel['menu_link'] ?>"><?php echo $mainMenuLabel['menu'] ?></a></li>
+            <li class="breadcrumb-item"><a href="<?php echo base_url().'dashboard/access_menu/'.$mainMenuLabel['menu_link'] ?>"><?php echo $mainMenuLabel['menu'] ?></a></li>
             <?php 
             if($subMenuLabel['sub_menu_id'] != 0)
                 echo '<li class="breadcrumb-item"><b><a href="'.base_url().$subMenuLabel['sub_menu_link'].'">'.$subMenuLabel['sub_menu'].'</a></b></li>';
