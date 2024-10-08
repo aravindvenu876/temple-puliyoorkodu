@@ -1,0 +1,241 @@
+.modalCustom .modal-dialog {
+	max-width: 767px;
+}
+
+.modalCustom .modal-dialog .modal-content .modal-header {
+	padding: 14px;
+	background: #592608;
+
+}
+
+.modalCustom .modal-dialog .modal-content .modal-header .modal-title {
+	font-size: 16px;
+	font-family: s-bold;
+	color: #fff!important;
+}
+
+.modalCustom .modal-dialog .modal-content .modal-header .modal-title .close {
+	color: #fff;
+	opacity: .7;
+}
+
+.modalCustom .modal-dialog .modal-content .modal-footer {
+
+	justify-content: center;
+	background: #ececec;
+}
+
+.modalCustom .modal-dialog .modal-content .modal-footer .btn-success {}
+
+.modalCustom .modal-dialog .modal-content .modal-footer .btn-default {
+	border: 1px solid #c7c7c7;
+}
+
+.modalCustom .modal-dialog .modal-content .modal-footer .btn {
+	padding: 5px;
+	min-width: 100px;
+	font-family: s-bold;
+	border-radius: 3px;
+	font-size: 12px;
+}
+
+.asterisk {
+	content: "*";
+	font-weight: bold;
+	color: red;
+}
+
+.Tblcategory th,
+.Tblcategory td {
+	border: none !important;
+}
+
+.Tblcategory tr.TblMinCategory {
+	background-color: rgba(145, 195, 245, 0.48);
+}
+
+.Tblcategory tr.TblMinCategory td {
+	font-family: bold;
+	font-size: 12px;
+}
+
+.Tblcategory tr.TblSubCategory {
+	padding-left: 24px;
+}
+
+.Tblcategory tr.TblSubCategory td.TblSubCategoryLabel {
+	text-indent: 18px;
+	font-size: 12px;
+	font-family: s-bold;
+}
+
+.white {
+	color: white;
+}
+
+.MargLeft25 {
+	margin-left: 25px;
+}
+
+.error {
+	color: red !important;
+}
+
+.dataTables_wrapper .dataTables_processing {
+	top: 80%;
+	background-color: transparent;
+	background: none;
+}
+
+.btnPosition {
+	width: auto;
+	padding: 0 15px !important;
+	font-family: bold;
+	height: 26px;
+	right: 30px;
+	top: 10px;
+	position: absolute;
+}
+
+.hrCustom {
+	margin: 0;
+	margin-bottom: 15px;
+	border-top: 1px solid rgb(172, 172, 172);
+}
+
+.table-bordered td .btn {
+	min-width: 65px;
+}
+
+.calenderPosition {
+	width: 300px;
+	position: absolute;
+	top: 10px;
+	right: 30px;
+	height: 26px !important;
+}
+
+.btn_duplicate_html,
+.btn_print_html {
+	min-width: 130px!important;
+}
+
+.tableCustomDes .table tr th {
+	background: #353345;
+	color: #fff;
+}
+
+.dataTables_wrapper {
+
+	padding-bottom: 40px;
+}
+
+.table tr td .btn {
+	font-size: 10px;
+}
+
+.Tblcategory tr.TblMinCategory td .custom-control .custom-control-label {
+	font-family: bold;
+	padding: 3px 0;
+}
+
+.custom-control-label {
+
+	padding: 3px 0;
+}
+
+.mediaAnnadanam {
+	border-radius: 3px;
+	margin-bottom: 5px;
+	background: #91c1f1;
+
+}
+
+.mediaAnnadanam h6 {
+	font-family: bold;
+}
+
+.mediaAnnadanam p {
+	font-family: s-bold;
+	margin: 0;
+}
+
+.header .dropdown .dropdown-menu .dropdown-item.active,
+.header .dropdown .dropdown-menu .dropdown-item:active {
+	background-color: #0050a1;
+}
+
+.header .dropdown .dropdown-menu .dropdown-item.active a,
+.header .dropdown .dropdown-menu .dropdown-item:active a {
+	color: #fff;
+}
+
+.printPosition {
+	position: absolute;
+	right: 15px;
+	bottom: 10px;
+	margin: auto;
+}
+
+.loginLogo {
+	text-align: center;
+}
+
+.loginLogo img {
+	width: 120px;
+	margin-bottom: 5px;
+}
+
+.loginLogo h3 {
+	font-family: bold;
+	font-size: 18px;
+	margin-bottom: 15px;
+}
+.amntRight{
+text-align: right;
+    display: block;
+    font-family: bold;
+}
+.modalCustom .modal-dialog{
+	top: 5%;
+}
+ .table tr td, .table tr th{
+	white-space: nowrap;
+}
+.amntWidth{
+	width: 80px;
+}
+a.btn.btn-default.btn-sm.delete.btn_active {
+    color: #000 !important;
+    background-color: #b9b9b9 !important;
+    border-color: #b9b9b9 !important;
+}
+.cus-tms-radio input[type="radio"]{
+	width: 12px;
+	position: relative;
+    top: 3px;
+}
+.cus-icons{
+	position: relative;
+    top: 19px;
+    margin: auto;
+    height: 32px;
+    font-size: 14px;
+    width: 32px;
+    background-color: #0050a1 !important;
+    border-color: #0050a1;
+    color: #fff;
+    padding: 7px 10px;
+    display: inline-block;
+    border-radius: 100px;
+    margin-right: 10px;
+}
+
+.bg-default{
+	background: #ff4c52 !important;
+    border-color: #ff4c52 !important;
+    color: #fff;
+}
+.add_plusbtn , .add_minbtn{
+    margin-top: 23px;
+}

@@ -1,0 +1,17 @@
+[18-Jan-2018 06:54:41 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 06:58:43 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 06:59:08 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 07:03:50 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 07:08:51 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 07:17:48 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 07:18:38 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 07:20:48 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 09:06:37 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 09:07:05 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 09:34:08 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 09:37:19 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 09:38:36 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 09:42:28 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 09:48:49 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 09:51:00 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39
+[18-Jan-2018 10:01:34 UTC] PHP Fatal error:  Call to undefined function iconv() in /home/gbsplustest/public_html/iict/application/libraries/Common_functions.php on line 39

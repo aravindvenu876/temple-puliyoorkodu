@@ -1,0 +1,169 @@
+<?php
+
+// $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+require_once(APPPATH.'/libraries/tcpdf/tcpdf.php');
+require_once(APPPATH.'/language/english/site_lang.php');
+require_once(APPPATH.'/language/malayalam/site_lang.php');
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+$pdf->SetCreator(PDF_CREATOR);
+$pdf->SetAuthor('Chelamattom Temple');
+
+
+
+$title = "Chelamattom Temple ";
+$pdf->SetTitle("Reports");
+$pdf->SetSubject('Reports');
+$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+// set default header data
+
+$headerTitle = "Chelamattom Temple ";
+$headerString = "Pooja Report";
+$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $headerTitle, $headerString);
+
+// set header and footer fonts
+$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+// set default monospaced font
+$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+// set margins
+$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+// set auto page breaks
+$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+// set image scale factor
+$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+
+// ---------------------------------------------------------
+
+
+// set font
+
+// $pdf->SetFont('dejavusans', '', 10);
+$fontname = TCPDF_FONTS::addTTFfont(APPPATH.'/libraries/tcpdf/fonts/SakalBharati Malayalam_N 9.14 _Ship.ttf', 'SakalBharati Malayalam_N 9.14 _Ship', '', 32);
+$pdf->SetFont($fontname, '', 10, '', 'false');
+
+
+// add a page
+$pdf->AddPage();
+
+// writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
+ //writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
+
+// create some HTML content
+$logoUrl = base_url()."assets/images/logo.png";
+$html = "";
+// $html .= '<style>'.file_get_contents(base_url().'assets/css/stylesheet_pdf.css').'</style>';
+// $html .= '<style>'.file_get_contents(base_url().'assets/css/stylesheet_pdf.css').'</style>';
+$html .= '<body style="background: #fafafa;margin: 15px 0;">';
+$html .= '<div  style="width: 700px; margin: auto;padding: 20px;border: 1px solid #ccc;background: #fff;padding:15px">';
+$html .= '<div  style="width:100%; float: left;">';
+$html .= '<div style="margin-left: 42px; width:400px;display:inline-block;padding:10px;">';
+$html .= '<h1  style="font-family: Montserrat, sans-serif;font-size: 11px;color: #26272F;letter-spacing: 0.41px;text-align: left;text-transform: uppercase;font-weight: bold;padding: 0px 10px;display: inline-block;margin-bottom: 3px;"> Chelamattom Temple </h1>';
+$html .= '<p   style="font-family: Montserrat, sans-serif;font-size: 10px;color: #26272F;letter-spacing: 0.42px;line-height: 12px;font-weight: bold;padding: 0px 10px;margin-bottom: 3px;">   From Date :<span>01-04-2019</span> </p>';
+$html .= '<p   style="font-family: Montserrat, sans-serif;font-size: 10px;color: #26272F;letter-spacing: 0.42px;line-height: 12px;font-weight: bold;padding: 0px 10px;">  To Date : <span> 29-04-2019</span></p>';
+$html .= '</div>';
+
+$html .= '</div>';
+$html .= '<div style="float:left; text-align:left; width:50%;display:inline-block;padding:10px">';
+$html .= '<p  style="font-family: Montserrat;font-weight: bold;font-size: 10px;color: #26272F;letter-spacing: 0.42px;line-height: 18px;"> User : <span>All Users</span></p>';
+$html .= '<p style="font-family: Montserrat;font-weight: bold;font-size: 10px;color: #26272F;letter-spacing: 0.42px;line-height: 18px;">   Counter : <span>All Counter</span></p>';
+$html .= '<p   style="font-family: Montserrat;font-weight: bold;font-size: 10px;color: #26272F;letter-spacing: 0.42px;line-height: 18px;margin-top: 5px;">  Date : <span>30-04-2019</span></p>';
+$html .= '<p style="font-family: Montserrat;font-weight: bold;font-size: 10px;color: #26272F;letter-spacing: 0.42px;line-height: 18px;"> Time : <span>09:30PM</span></p>';
+$html .= '</div>';
+$html .= '<p style="font-family: Montserrat;font-weight: bold;font-size: 11px;color: #26272F;letter-spacing: 0.46px;line-height: 18px;text-align: center;margin: 30px 0px 0px;text-transform: uppercase;"> Pooja Report 2019</p>';
+$html .= '<span style="width: 134px;height: 1px;margin: auto;background:#979797;display: block; margin-top: 5px;"></span>';
+$html .= '<span style="width: 134px;height: 1px;margin: auto;background:#979797;display: block;margin-top: 3px; "></span>';
+$html .= '<table style="width: 100%;margin: 20px 0px;">';
+$html .= '<tr style="background: #F1F1F1;padding: 10px;font-size: 10px;color: #26272F;text-align: left;font-family: Montserrat;font-weight: bold;height:30px;">';
+$html .= '<td style="padding: 10px;">SI</td>';
+$html .= '<td style="padding: 10px;">Date</td>';
+$html .= '<td style="padding: 10px;">Name</td>';
+$html .= '<td style="padding: 10px;">Pooja</td>';
+$html .= '<td style="padding: 10px;">Star</td>';
+$html .= '<td style="padding: 10px;">Pooja</td>';
+$html .= '<td style="padding: 10px;">Receipt No:</td>';
+$html .= '<td style="padding: 10px;">User</td>';
+$html .= '<td style="padding: 10px;">Counter</td>';
+$html .= '<td style="padding: 10px;">Amount</td>';
+$html .= '</tr>';
+$html .= '<tr style="background: #FFFFFF;;padding: 10px;font-size: 9px;color: #26272F;text-align: left;font-family: Montserrat;font-weight: 500;">';
+$html .= '<td style="padding: 10px;">01</td>';
+$html .= '<td style="padding: 10px;">Pooja Vazhipaaduaka</td>';
+$html .= '<td style="padding: 10px;">300.00</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '</tr>';
+$html .= '<tr style="background: #FFFFFF;;padding: 10px;font-size: 9px;color: #26272F;text-align: left;font-family: Montserrat;font-weight: 500;">';
+$html .= '<td style="padding: 10px;">02</td>';
+$html .= '<td style="padding: 10px;">Oil</td>';
+$html .= '<td style="padding: 10px;">100.00</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '<td style="padding: 10px;">--</td>';
+$html .= '</tr>';
+$html .= '<tr style="border-bottom: 1px solid #9E9E9E;border-top: 1px solid #9E9E9E;padding: 10px;">';
+$html .= '<td colspan="4"style="font-family: Montserrat;font-weight: bold;font-size: 9px;color: #26272F;text-align: left;padding: 10px;">Total</td>';
+$html .= '<td colspan="6" style="font-family:Montserrat;font-weight: bold;font-size: 9px;color: #26272F;text-align: right;padding: 10px;"> 50000.00</td>';
+$html .= '</tr>';
+$html .= '</table>';
+$html .= '<table style="width: 100%;margin: 30px 0px 20px;">';
+$html .= '<tr style="padding: 10px;font-size: 10px;color: #26272F;text-align: left;font-family: Montserrat;font-weight: bold;">';
+$html .= '<td style="height: 35px;">';
+$html .= '<span style="height: 35px;border-bottom: 1px solid #796f6f;width: 95%;display: block;">Name</span>';
+$html .= '</td>';
+$html .= '<td style="height: 35px;">';
+$html .= '<span style="height: 35px;border-bottom: 1px solid #796f6f;width: 95%;display: block;">Signature</span>';
+$html .= '</td>';
+$html .= '<td style="height: 35px;">';
+$html .= '<span style="height: 35px;border-bottom: 1px solid #796f6f;width: 95%;display: block;">Name</span>';
+$html .= '</td>';
+$html .= '<td style="height: 35px;">';
+$html .= '<span style="height: 35px;border-bottom: 1px solid #796f6f;width: 95%;display: block;">Signature</span>';
+$html .= '</td>';
+$html .= '</tr>';
+$html .= '<tr style="padding: 10px;font-size: 10px;color: #26272F;text-align: left;font-family: Montserrat;font-weight: bold;">';
+$html .= '<td style="height: 35px;padding-top: 20px;">';
+$html .= '<span style="height: 35px;border-bottom: 1px solid #796f6f;width: 95%;display: block;">Name</span>';
+$html .= '</td>';
+$html .= '<td style="height: 35px;padding-top: 20px;">';
+$html .= '<span style="height: 35px;border-bottom: 1px solid #796f6f;width: 95%;display: block;">Signature</span>';
+$html .= '</td>';
+$html .= '<td style="height: 35px;padding-top: 20px;">';
+$html .= '<span style="height: 35px;border-bottom: 1px solid #796f6f;width: 95%;display: block;">Name</span>';
+$html .= '</td>';
+$html .= '<td style="height: 35px;padding-top: 20px;">';
+$html .= '<span style="height: 35px;border-bottom: 1px solid #796f6f;width: 95%;display: block;">Signature</span>';
+$html .= '</td>';
+$html .= '</tr>';
+$html .= '</table>';
+$html .= '</div>';
+$html .= '</body>';
+$html .= "<br>";
+
+
+
+
+// output the HTML content
+$pdf->writeHTML($html, true, false, true, false, '');
+
+//Close and output PDF document
+$pdf->Output('example_006.pdf', 'I');
+?>

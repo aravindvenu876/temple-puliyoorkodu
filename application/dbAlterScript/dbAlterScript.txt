@@ -1,0 +1,84 @@
+﻿Date : - 09-01-2019
+1: ALTER TABLE `receipt` ADD `receipt_identifier` INT NOT NULL AFTER `session_id`;
+
+Date : - 17-01-2019
+1: ALTER TABLE `receipt_details`  ADD `description` VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_bin NULL  AFTER `address`;
+2: ALTER TABLE `auditorium_booking_details`  ADD `balance_to_be_paid` DECIMAL(10,2) NOT NULL DEFAULT '0'  AFTER `advance_paid`;
+3: ALTER TABLE `auditorium_booking_details` CHANGE `status` `status` ENUM('BOOKED','PAID','CANCELLED','MID') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+4: ALTER TABLE `receipt` CHANGE `pooja_type` `pooja_type` ENUM('Normal','Scheduled','Prathima Samarppanam','Prathima Aavahanam','Advance','Final') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+5: CREATE TABLE `stall_master` (
+  `id` int(11) NOT NULL,
+  `temple_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `rate` decimal(10,2) NOT NULL,
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+6: ALTER TABLE `stall_master` ADD PRIMARY KEY (`id`);
+7: ALTER TABLE `stall_master` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+8: CREATE TABLE `stall_master_lang` (
+  `id` int(11) NOT NULL,
+  `stall_id` int(11) NOT NULL,
+  `lang_id` int(11) NOT NULL,
+  `stall` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+9: ALTER TABLE `stall_master_lang` ADD PRIMARY KEY (`id`);
+10: ALTER TABLE `stall_master_lang` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+11: ALTER TABLE `stall_master_lang`  ADD `description` TEXT CHARACTER SET utf8 COLLATE utf8_bin NULL  AFTER `stall`;
+12: CREATE VIEW `view_stalls`  AS  select `tbl1`.`id` AS `id`,`tbl1`.`temple_id` AS `temple_id`,`tbl1`.`status` AS `status`,`tbl1`.`rate` AS `rate`,`tbl2`.`stall` AS `stall_eng`,`tbl2`.`description` AS `description_eng`,`tbl3`.`stall` AS `stall_alt`,`tbl3`.`description` AS `description_alt` from ((`stall_master` `tbl1` join `stall_master_lang` `tbl2` on((`tbl2`.`stall_id` = `tbl1`.`id`))) join `stall_master_lang` `tbl3` on((`tbl3`.`stall_id` = `tbl1`.`id`))) where ((`tbl2`.`lang_id` = 1) and (`tbl3`.`lang_id` = 2) and (`tbl1`.`status` <> 2)) ;
+
+Date : - 18-01-2019
+1: ALTER TABLE `receipt` CHANGE `receipt_status` `receipt_status` ENUM('ACTIVE','CANCELLED','DRAFT') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'ACTIVE';
+2: ALTER TABLE `auditorium_booking_details` CHANGE `status` `status` ENUM('BOOKED','PAID','CANCELLED','MID','DRAFT') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+Date:17-01-2019 
+1.ALTER TABLE `pos_receipt_book` ADD `temple_id` INT(11) NOT NULL AFTER `rate`;
+2.SELECT
+    `tbl1`.`id` AS `id`,
+    `tbl1`.`status` AS `status`,
+    `tbl1`.`page` AS `page`,
+    `tbl1`.`rate` AS `rate`,
+    `tbl2`.`book` AS `book_eng`,
+    `tbl3`.`book` AS `book_alt`,
+    `tbl4`.`temple` AS `temple_eng`,
+    `tbl5`.`temple` AS `temple_alt`,
+    `tbl1`.`temple_id` AS `temple_id`
+FROM
+    (
+        (
+            (
+                (
+                    `temple_software`.`pos_receipt_book` `tbl1`
+                JOIN `temple_software`.`pos_receipt_book_lang` `tbl2`
+                ON
+                    ((`tbl2`.`book_id` = `tbl1`.`id`))
+                )
+            JOIN `temple_software`.`pos_receipt_book_lang` `tbl3`
+            ON
+                ((`tbl3`.`book_id` = `tbl1`.`id`))
+            )
+        JOIN `temple_software`.`temple_master_lang` `tbl4`
+        ON
+            (
+                (
+                    `tbl4`.`temple_id` = `tbl1`.`temple_id`
+                )
+            )
+        )
+    JOIN `temple_software`.`temple_master_lang` `tbl5`
+    ON
+        (
+            (
+                `tbl5`.`temple_id` = `tbl1`.`temple_id`
+            )
+        )
+    )
+WHERE
+    (
+        (`tbl2`.`lang_id` = 1) AND(`tbl3`.`lang_id` = 2) AND(`tbl4`.`lang_id` = 1) AND(`tbl5`.`lang_id` = 2) AND(`tbl1`.`status` <> 2)
+    )
+3.INSERT INTO `system_sub_menu` (`id`, `menu_id`, `menu_order`, `status`, `link`) VALUES (32, '10', '2', '1', 'receipt_book_add');
+4.INSERT INTO `system_sub_menu` (`id`, `menu_id`, `menu_order`, `status`, `link`) VALUES (33, '10', '3', '1', 'receipt_book_used');
+5.INSERT INTO `system_sub_menu_lang` (`id`, `lang_id`, `sub_menu_id`, `sub_menu`) VALUES ('61', '2', '32', 'Add Receipt Books Details'),
+ ('62', '2', '32', 'രസീതി പുസ്തക വിശദാംശങ്ങൾ ചേർക്കുക');
+6.INSERT INTO `system_sub_menu_lang` (`id`, `lang_id`, `sub_menu_id`, `sub_menu`) VALUES ('63', '1', '33', 'Add Used Receipt Books Details'), 
+('64', '2', '33', 'ഉപയോഗിച്ച രസീതുകൾ പുസ്തക വിശദാംശങ്ങൾ ചേർക്കുക');

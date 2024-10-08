@@ -1,0 +1,178 @@
+@font-face {
+    font-family: "light";
+    src: url(../fonts/OpenSans-Light.ttf)
+}
+@font-face {
+    font-family: "regular";
+    src: url(../fonts/OpenSans-Regular.ttf)
+}
+@font-face {
+    font-family: "s-bold";
+    src: url(../fonts/OpenSans-SemiBold.ttf)
+}
+@font-face {
+    font-family: "bold";
+    src: url(../fonts/OpenSans-Bold.ttf)
+}
+@font-face {
+    font-family: "extraBold-bold";
+    src: url(../fonts/OpenSans-ExtraBold.ttf)
+}
+
+
+body{
+    background:#f2f5f7;
+    font-family: 'Open Sans', sans-serif;
+    margin:0;
+    font-size:12px;
+    color:#4e4a4a;
+    text-align: left;
+}
+html{
+    overflow-x:hidden;
+    position:relative;
+    min-height:100%;
+    background:#f2f5f7
+}
+li{
+    list-style: none !important;
+}
+
+.Customtable{
+	    font-size: 12px;
+    max-width: 768px;
+    margin: 20px auto;
+    margin-top: 0;
+}
+
+.Customtable>tbody>tr>td {
+    position: relative;
+    cursor: pointer;
+    height: 105px;
+    line-height: 1em;
+    vertical-align: middle;
+    min-width: 101px;
+    padding: 10px;
+    font-size: 1.15em;
+    transition: all .3s ease 0s;
+    border: 1px solid #dee2e6;
+}
+.Customtable .main-day {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0px;
+    font-size: 26px;
+    text-align: center;
+    font-family: "bold";
+    bottom: 0;
+    margin: auto;
+    height: 24px;
+
+}
+.cal-day>.day-info {
+    font-size: .5em;
+}
+.Customtable .sub-day {
+    right: 5px;
+    position: absolute;
+    top: -70px;
+    font-size: 15px;
+    color: #ec1b24;
+    font-family: s-bold;
+}
+.Customtable .day-info {
+    padding-left: 5px;
+    padding-right: 5px;
+    position: absolute;
+    bottom: 3px;
+    left: 0;
+    font-size: .47em;
+    line-height: 1.2em;
+    font-weight: 400;
+    color: #666;
+}
+
+.nakshatra-name, .tithi-name {
+    float: left;
+    clear: left;
+    text-overflow: ellipsis;
+    font-size: 9px;
+    margin-bottom: 4px;
+    font-family: "s-bold";
+}
+.nakshatra-ghati, .tithi-ghati {
+    float: right;
+    font-size: 9px;
+    margin-bottom: 4px;
+    font-family: "s-bold";
+}
+.calendarHead{
+    max-width: 768px;
+    margin: auto;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+.calendarHeadMonth,.calendarHeadMalMonth{
+	flex-grow: 1;
+	vertical-align:middle!important;
+    border:none !important;
+    position:  relative!important;
+}
+.calendarHeadYear{
+    flex-grow: 8;
+    text-align: center;
+    font-size: 24px;
+    font-family: bold;
+	vertical-align:middle!important;
+    border:none !important;
+    
+}
+.calendarHeadMalMonth {
+	text-align: right;
+}
+.calendarHeadMalMonth i{
+font-size: 14px;
+}
+
+.calendarHeadMalMonth h6{
+    margin: 0;    font-family: bold;
+    display: inline-block;
+}
+.calendarHeadMalMonth h6 small{
+    display: block;    font-family: s-bold;
+}
+.calendarHead  th i{
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    font-size: 14px;
+    background: #e8e8e8;
+
+}
+
+.calendarHeadMonth{
+    font-size: 22px;
+    font-family: bold;
+}
+th.day {
+    font-family: bold;
+    border: 1px solid #dee2e6;
+}
+/*
+.prevMonth, .nextMonth{
+	background-color: red;
+}*/
+.calendarDirection{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 38px;
+}
+.calenderDirectionRight {
+right: 15px;
+}
+.calenderDirectionLeft {
+left: 15px;
+}
