@@ -72,8 +72,8 @@ class Common_functions {
     }
 
     function menu_and_permissions($menuLink = NULL){
-        $data = array();
         if($menuLink == NULL){
+            $data = array();
             $count = $this->obj->uri->total_segments();
             $link = "";
             for($i=1;$i<=$count;$i++){
@@ -87,6 +87,19 @@ class Common_functions {
             $link           = $menuLink;
             $data['link']   = $menuLink;
         }
+        //Log Start
+        // $logInfoData = array(
+        //     'type'          => 'Menu Access',
+        //     'user_id'       => $this->obj->session->userdata('user_id'),
+        //     'role_id'       => $this->obj->session->userdata('role'),
+        //     'user_name'     => $this->obj->session->userdata('name'),
+        //     'request'       => current_url(),
+        //     'sessionn_data' => $this->obj->session->userdata(),
+        //     'get_data'      => $_GET,
+        //     'post_data'     => $_POST,
+        // );
+        // $this->write_system_log($logInfoData);
+        //Log End
         if($this->roleId == -1){
             $this->obj->db->select('tbl2.*,tbl40.menu');
             $this->obj->db->from('system_main_menu tbl2');
@@ -157,24 +170,29 @@ class Common_functions {
                 $this->obj->db->where('tbl40.lang_id', $this->languageId);
                 $data['currrent_menu'] = $this->obj->db->get()->row_array();
             }
-            $this->obj->db->select('tbl1.*,tbl30.sub_menu');
-            $this->obj->db->from('system_sub_menu tbl1');
-            $this->obj->db->join('user_permission tbl3', 'tbl3.menu_id = tbl1.id');
-            $this->obj->db->join('system_sub_menu_lang tbl30','tbl1.id = tbl30.sub_menu_id');
-            $this->obj->db->where('tbl3.role_id', $this->obj->session->userdata('role'));
-            $this->obj->db->where('tbl3.view_status', 1);
-            $this->obj->db->where('tbl1.menu_id', $data['currrent_menu']['menu_id']);
-            $this->obj->db->where('tbl1.status', 1);
-            $this->obj->db->where('tbl3.type', 'sub');
-            $this->obj->db->where('tbl30.lang_id', $this->languageId);
-            $this->obj->db->order_by('tbl1.menu_order', 'asc');
-            $data['sub_menus'] = $this->obj->db->get()->result_array();
-            $this->obj->db->select('*');
-            $this->obj->db->where('menu_id',$data['currrent_menu']['sub_menu_id']);
-            $this->obj->db->where('role_id',$this->roleId);
-            $this->obj->db->where('type','sub');
-            $this->obj->db->where('view_status',1);
-            $data['permissions'] = $this->obj->db->get('user_permission')->row_array();
+            if(empty($data['currrent_menu'])){
+                $data['sub_menus'] = [];
+                $data['permissions'] = [];
+            }else{
+                $this->obj->db->select('tbl1.*,tbl30.sub_menu');
+                $this->obj->db->from('system_sub_menu tbl1');
+                $this->obj->db->join('user_permission tbl3', 'tbl3.menu_id = tbl1.id');
+                $this->obj->db->join('system_sub_menu_lang tbl30','tbl1.id = tbl30.sub_menu_id');
+                $this->obj->db->where('tbl3.role_id', $this->obj->session->userdata('role'));
+                $this->obj->db->where('tbl3.view_status', 1);
+                $this->obj->db->where('tbl1.menu_id', $data['currrent_menu']['menu_id']);
+                $this->obj->db->where('tbl1.status', 1);
+                $this->obj->db->where('tbl3.type', 'sub');
+                $this->obj->db->where('tbl30.lang_id', $this->languageId);
+                $this->obj->db->order_by('tbl1.menu_order', 'asc');
+                $data['sub_menus'] = $this->obj->db->get()->result_array();
+                $this->obj->db->select('*');
+                $this->obj->db->where('menu_id',$data['currrent_menu']['sub_menu_id']);
+                $this->obj->db->where('role_id',$this->roleId);
+                $this->obj->db->where('type','sub');
+                $this->obj->db->where('view_status',1);
+                $data['permissions'] = $this->obj->db->get('user_permission')->row_array();
+            }
         }
         return $data;
     }

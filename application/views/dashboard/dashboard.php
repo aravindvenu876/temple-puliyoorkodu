@@ -38,20 +38,20 @@
     add_js('assets/js/animated.js');
     add_js('assets/js/jquery.nestable.js');
     function add_css($url) {
-        echo '<link href="'.base_url($url).'?v='.SCRIPT_CACHE_CODE.'" rel="stylesheet" type="text/css" />';
+        echo "<link href='".base_url($url)."?v=".SCRIPT_CACHE_CODE."' rel='stylesheet' type='text/css' />";
     }
     function add_js($url) {
-        echo '<script src="'.base_url($url).'?v='.SCRIPT_CACHE_CODE.'"></script>';
+        echo "<script src='".base_url($url)."?v=".SCRIPT_CACHE_CODE."'></script>";
     }
     ?>
 </head>
 <body>
     <div class="load">
-        <img src="<?php echo base_url('assets/images/loading.svg') ?>">
+        <img src="<?php echo base_url() ?>assets/images/loading.svg">
     </div>
     <section class="header">
-        <a href="<?php echo base_url() ?>" class="logo">
-            <img src='<?php echo base_url("assets/images/logo.png");?>' class="img-fluid" >
+        <a href="" class="logo">
+            <img src='<?php echo base_url("assets/images/logo.png");?>'   class="img-fluid" >
         </a>
 		<?php 
 		$templeName = "";
@@ -61,7 +61,7 @@
         }
         echo '<h1>Temple Management System - '.$templeName.'</h1>';
         ?>
-        <a href="<?php echo base_url('logout') ?>"><span class="fa fa-power-off"></span></a>
+        <a href="<?php echo base_url() ?>logout"><span class="fa fa-power-off"></span></a>
         <div class="dropdown">
             <a class=" dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="fa fa-cog"></span>
@@ -112,6 +112,7 @@
                         <ul></ul>
                     </div>
 				</div>
+				<div class="seeAll"></div>
 			</div>
 		</div>
         <span class="user_name"><?php echo $this->session->userdata('name') ?></span>
@@ -141,15 +142,6 @@
         </div>
     </section>
     <section class="content_section">
-        <div class="re_menu">
-            <div id="menu">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div id="nav_list_panel">
-                <i id="re_menu_close" class="far fa-times-circle"></i>
-                <ul class="navbar-nav nav" role="tablist"></ul>
-            </div>
-        </div>
         <section class="tab_content_section dashboardsetion">
             <div class="container-fluid">
                 <div class="row">
@@ -195,7 +187,6 @@
             </div>
         </section>
     </section>
-    </div>
     <div class="clearfix"></div>
     <footer class="footer">
         <div class="container-fluid">
@@ -206,10 +197,10 @@
             </div>
         </div>
     </footer>
+    <script>
+    function goTO(link){
+        window.location.href = link;
+    }
+    </script>
 </body>
 </html>
-<script>
-function goTO(link){
-    window.location.href = link;
-}
-</script>

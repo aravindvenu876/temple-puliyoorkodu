@@ -44,22 +44,22 @@
     add_js('assets/js/animated.js');
     add_js('assets/js/select2.min.js');
     function add_css($url) {
-        echo '<link href="'.base_url($url).'?v='.SCRIPT_CACHE_CODE.'" rel="stylesheet" type="text/css" />';
+        echo "<link href='".base_url($url)."?v=".SCRIPT_CACHE_CODE."' rel='stylesheet' type='text/css' />";
     }
     function add_js($url) {
-        echo '<script src="'.base_url($url).'?v='.SCRIPT_CACHE_CODE.'"></script>';
+        echo "<script src='".base_url($url)."?v=".SCRIPT_CACHE_CODE."'></script>";
     }
     ?>
 </head>
 <body>
     <div class="load">
-        <img src="<?php echo base_url('assets/images/loading.svg') ?>">
+        <img src="<?php echo base_url() ?>assets/images/loading.svg">
     </div>
     <section class="header">
-        <a href="<?php echo base_url() ?>" class="logo">
+        <a href="" class="logo">
             <img src='<?php echo base_url("assets/images/logo.png");?>' class="img-fluid" >
         </a>
-		<?php 
+        <?php 
 		$templeName = "";
 		foreach($temples as $row){ 
             if($row->id == $this->session->userdata('temple'))
@@ -69,8 +69,8 @@
         ?>
         <a href="<?php echo base_url() ?>logout"><span class="fa fa-power-off"></span></a>
         <div class="dropdown">
-            <a class=" dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="fa fa-cog"></span>
+            <a class=" dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="fa fa-cog frft"></span>
             </a>
             <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
                 <li class="dropdown-item">
@@ -118,6 +118,7 @@
                         <ul></ul>
                     </div>
 				</div>
+				<div class="seeAll"></div>
 			</div>
 		</div>
         <span class="user_name"><?php echo $this->session->userdata('name') ?></span>
@@ -127,16 +128,15 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="row MenuBox">
-                    <div role="" id="nav-main"  class="okayNav">
+                    <div role="" id="nav-main" class="okayNav">
                         <ul>
 							<?php 
                             foreach($mainmenu as $row){
                                 echo "<li>";
-                                if($main_menu_id == $row['id']){
+                                if($main_menu_id == $row['id'])
                                     echo "<a class='active' href='".base_url().'dashboard/access_menu/'.$row['link']."'>".$row['menu']."</a>";
-                                }else{
+                                else
                                     echo "<a  href='".base_url().'dashboard/access_menu/'.$row['link']."'>".$row['menu']."</a>";
-                                }
                                 echo "</li>";
                             } 
                             ?> 
@@ -152,9 +152,10 @@
       <div class="container-fluid">
          <ol class="breadcrumb bg-light">
             <li class="breadcrumb-item"><a href="<?php echo base_url().$mainMenuLabel['menu_link'] ?>"><?php echo $mainMenuLabel['menu'] ?></a></li>
-            <?php if($subMenuLabel['sub_menu_id'] != 0){ ?>
-                <li class="breadcrumb-item"><b><a href="<?php echo base_url().$subMenuLabel['sub_menu_link'] ?>"><?php echo $subMenuLabel['sub_menu']; ?></a></b></li>
-            <?php } ?>
+            <?php 
+            if($subMenuLabel['sub_menu_id'] != 0)
+                echo '<li class="breadcrumb-item"><b><a href="'.base_url().$subMenuLabel['sub_menu_link'].'">'.$subMenuLabel['sub_menu'].'</a></b></li>';
+            ?>
          </ol>
       </div>
    </section>
@@ -167,11 +168,10 @@
                      <?php 
                         foreach($submenu as $row){
                           	echo "<li class='nav-item'>";
-                          	if($sub_menu_id == $row['id']){
+                          	if($sub_menu_id == $row['id'])
                             	echo "<a class='nav-link active_sub_menu' style='border-bottom: 1px solid #B14B10;' href='".base_url().$row['link']."'>".$row['sub_menu']."</a>";
-                         	}else{
+                         	else
                             	echo "<a class='nav-link' href='".base_url().$row['link']."'>".$row['sub_menu']."</a>";
-                         	}
                          	echo "</li>";
                         } 
                         ?>

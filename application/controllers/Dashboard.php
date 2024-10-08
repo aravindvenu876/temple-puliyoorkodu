@@ -10,19 +10,20 @@ class Dashboard extends CI_Controller {
 		$this->common_functions->set_language();
         $this->load->model('General_Model');
         $this->load->model('Dashboard_model');
-        $menuData                   = $this->common_functions->menu_and_permissions();
-        $this->data['mainmenu']     = $menuData['main_menus'];
-        $this->data['main_menu_id'] = $menuData['currrent_menu']['menu_id'];
-        $this->data['submenu']      = $menuData['sub_menus'];
-        $this->data['mainMenuLabel']= $menuData['currrent_menu'];
-        $this->data['sub_menu_id']  = $menuData['currrent_menu']['sub_menu_id'];
-        $this->data['subMenuLabel'] = $menuData['currrent_menu'];
-        $this->data['permissions']  = $menuData['permissions'];
-        $this->data['temples']      = $this->common_functions->get_temples();
-        $this->data['languages']    = $this->common_functions->get_languages();
-        $this->languageId           = $this->session->userdata('language');
-        $this->templeId             = $this->session->userdata('temple');
-		$this->data['unMappedAccountHeadCount'] = $this->common_functions->set_unmapped_entry_counts($this->templeId);
+        $menuData = $this->common_functions->menu_and_permissions();
+        $this->data['mainmenu'] = $menuData['main_menus'];
+        if(!empty($menuData['currrent_menu'])){
+            $this->data['main_menu_id'] = $menuData['currrent_menu']['menu_id'];
+            $this->data['submenu'] = $menuData['sub_menus'];
+            $this->data['mainMenuLabel'] = $menuData['currrent_menu'];
+            $this->data['sub_menu_id'] = $menuData['currrent_menu']['sub_menu_id'];
+            $this->data['subMenuLabel'] = $menuData['currrent_menu'];
+            $this->data['permissions'] = $menuData['permissions'];
+        }
+        $this->data['temples'] = $this->common_functions->get_temples();
+        $this->data['languages'] = $this->common_functions->get_languages();
+        $this->languageId = $this->session->userdata('language');
+        $this->templeId = $this->session->userdata('temple');
     }
 
     public function index() {
@@ -63,14 +64,16 @@ class Dashboard extends CI_Controller {
 	}
 
     function access_menu($menuLink){
-        $menuData                   = $this->common_functions->menu_and_permissions($menuLink);
-        $this->data['mainmenu']     = $menuData['main_menus'];
+        if($menuLink == 'dashboard')
+            redirect('dashboard');
+        $menuData = $this->common_functions->menu_and_permissions($menuLink);
+        $this->data['mainmenu'] = $menuData['main_menus'];
         $this->data['main_menu_id'] = $menuData['currrent_menu']['menu_id'];
-        $this->data['submenu']      = $menuData['sub_menus'];
-        $this->data['mainMenuLabel']= $menuData['currrent_menu'];
-        $this->data['sub_menu_id']  = $menuData['currrent_menu']['sub_menu_id'];
+        $this->data['submenu'] = $menuData['sub_menus'];
+        $this->data['mainMenuLabel'] = $menuData['currrent_menu'];
+        $this->data['sub_menu_id'] = $menuData['currrent_menu']['sub_menu_id'];
         $this->data['subMenuLabel'] = $menuData['currrent_menu'];
-        $this->data['permissions']  = $menuData['permissions'];
+        $this->data['permissions'] = $menuData['permissions'];
         $this->load->view('includes/header',$this->data);
         $this->load->view('includes/footer');
     }
