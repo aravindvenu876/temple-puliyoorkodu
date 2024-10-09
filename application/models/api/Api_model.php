@@ -8,26 +8,18 @@ class Api_model extends CI_Model {
 
     function get_devotee_by_phone_number($phone,$language){
         $this->db->select('id,name,address,mobile_number1 as mobile,star,family_address');
-        $this->db->like('mobile_number1',$phone,'after');
-        return $this->db->get('devotee_master')->result();
+        return $this->db->like('mobile_number1',$phone,'after')->get('devotee_master')->result();
     }
 
     function get_devotee_by_name($name,$language){
-        // $this->db->select('id,name,address,mobile_number1 as mobile,star,family_address');
-        $this->db->distinct();
-        $this->db->select('name');
-        $this->db->like('name',strtolower($name),'after');
-        // $this->db->or_like('LOWER(family_address)=',strtolower($name),'after');
-        $this->db->limit(20);
-        return $this->db->get('devotee_master')->result();
+        $this->db->distinct()->select('name')->like('name',strtolower($name),'after');
+        return $this->db->limit(20)->get('devotee_master')->result();
     }
 
     function get_devotee_by_family_name($name,$language){
         $this->db->select('id,name,address,age as mobile,star,family_address');
-        // $this->db->like('LOWER(name)=',strtolower($name),'after');
         $this->db->like('family_address',strtolower($name),'after');
-        $this->db->limit(20);
-        return $this->db->get('devotee_master')->result();
+        return $this->db->limit(20)->get('devotee_master')->result();
     }
 
     function add_receipt_main($data){
@@ -230,45 +222,29 @@ class Api_model extends CI_Model {
         return $this->db->get()->row_array();
     }
 
-    function check_counter_session($data,$time=""){
-        $this->db->select('*')->where($data);
-        if($time != ""){
-            $this->db->where('session_start_time <=',$time);
-            $this->db->where('session_close_time >=',$time);
-        }
-        $countData = $this->db->get('counter_sessions')->row_array();
-        if(empty($countData)){
+    function check_counter_session($data, $time=""){
+        if($time != "")
+            $this->db->where('session_start_time <=',$time)->where('session_close_time >=',$time);
+        $countData = $this->db->where($data)->get('counter_sessions')->row_array();
+        if(empty($countData))
             return TRUE;
-        }else{
+        else
             return FALSE;
-        }
     }
 
     function get_counter_session($data1){
-        $this->db->select('*');
-        $this->db->where('user_id',$data1['user_id']);
-        $this->db->where('session_mode',$data1['session_mode']);
-        $this->db->where('session_date',$data1['session_date']);
-        $this->db->where('counter_id',$data1['counter_id']);
-        $this->db->where('session_start_time <=',$data1['start']);
-        $this->db->where('session_close_time >=',$data1['start']);
+        $this->db->where('user_id',$data1['user_id'])->where('session_mode',$data1['session_mode']);
+        $this->db->where('session_date',$data1['session_date'])->where('counter_id',$data1['counter_id']);
+        $this->db->where('session_start_time <=',$data1['start'])->where('session_close_time >=',$data1['start']);
         return $this->db->get('counter_sessions')->row_array();
     }
 
     function update_counter_session($id,$data){
-        if($this->db->where('id',$id)->update('counter_sessions',$data)){
-            return TRUE;
-        }else{
-            return FALSE;
-        }
+        return $this->db->where('id',$id)->update('counter_sessions',$data);
     }
 
     function update_counter_session_after_confirm($id,$user,$data){
-        if($this->db->where('id',$id)->where('user_id',$user)->update('counter_sessions',$data)){
-            return TRUE;
-        }else{
-            return FALSE;
-        }
+        return $this->db->where('id',$id)->where('user_id',$user)->update('counter_sessions',$data);
     }
 
     function get_rented_asset_main($id="",$phone="",$date="",$status){
@@ -352,7 +328,7 @@ class Api_model extends CI_Model {
     }
 
     function get_session_data($id){
-        return $this->db->select('*')->where('id',$id)->get('counter_sessions')->row_array();
+        return $this->db->where('id',$id)->get('counter_sessions')->row_array();
     }
 
     function check_hall_availability($request){
@@ -661,11 +637,7 @@ class Api_model extends CI_Model {
     }
 
     function last_duplicate_receipt_generation($duplicateData){
-        if($this->db->insert('duplicate_receipts_tracks',$duplicateData)){
-            return TRUE;
-        }else{
-            return FALSE;
-        }
+        return $this->db->insert_batch('duplicate_receipts_tracks',$duplicateData);
     }
 
     function book_aavahanam($data){
@@ -927,11 +899,10 @@ class Api_model extends CI_Model {
     }
 
     function get_receipt_with_receipt_identifier($id){
-		$data = $this->db->select('*,DATE_FORMAT(receipt_date, "%d-%m-%Y") as receipt_date')->where('receipt_identifier',$id)->get('opt_counter_receipt')->result();
-		if(!empty($data)){
+		$data = $this->db->where('receipt_identifier',$id)->get('opt_counter_receipt')->result();
+		if(!empty($data))
 			return $data;
-		}
-		return $this->db->select('*,DATE_FORMAT(receipt_date, "%d-%m-%Y") as receipt_date')->where('receipt_identifier',$id)->get('receipt')->result();
+		return $this->db->where('receipt_identifier',$id)->get('receipt')->result();
     }
 
     function get_receipt_with_receipt_identifier_new_optimized($id){

@@ -1141,12 +1141,17 @@ class Receipt extends REST_Controller {
 
     function duplicate_last_receipt_generation_post(){
         $allReceipts = $this->api_model->get_receipt_with_receipt_identifier($this->requestData->receipt_id);
-        foreach($allReceipts as $row){
-            $insertData = array();
-            $insertData['receipt_id'] = $row->id;
-            $insertData['generated_by'] = $this->requestData->user_id;
-            $insertData['session_id'] = $this->requestData->session_id;
-            $insertData['pos_counter_id'] = $this->requestData->counter_no;
+        if(!empty($allReceipts)){
+            $insertData = [];
+            foreach($allReceipts as $key => $row){
+                $allReceipts[$key]->receipt_date = date('d-m-Y', strtotime($row->receipt_date));
+                $insertData[] = array(
+                    'receipt_id' => $row->id,
+                    'generated_by' => $this->requestData->user_id,
+                    'session_id' => $this->requestData->session_id,
+                    'pos_counter_id' => $this->requestData->counter_no
+                );
+            }
             $this->api_model->last_duplicate_receipt_generation($insertData);
         }
         $this->responseData['status'] = TRUE;
@@ -1159,9 +1164,8 @@ class Receipt extends REST_Controller {
         $total_count = count($this->api_model->get_draft_receipts_by_phone($this->requestData->temple_id,$this->requestData->phone,$this->requestData->date));
         $page_count = floor($total_count/$this->requestData->value_count);
         $reminder_count = $total_count%$this->requestData->value_count;
-        if($reminder_count != 0){
+        if($reminder_count != 0)
             $page_count = $page_count + 1;
-        }
         $this->responseData['data']['total_count'] = $total_count;
         $this->responseData['data']['page_count'] = $page_count;
         $receipt1 = $this->api_model->get_draft_receipts_by_phone_by_pagination($this->requestData->temple_id,$this->requestData->phone,$this->requestData->date,$this->requestData->value_count,$this->requestData->page_no);
