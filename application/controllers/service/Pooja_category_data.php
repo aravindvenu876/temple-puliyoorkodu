@@ -26,101 +26,58 @@ class Pooja_category_data extends REST_Controller {
         $sEcho = $this->input->get_post('sEcho', TRUE);
         $sSearch = trim($sSearch);
         $all = $this->Pooja_model->get_all_pooja_categories($this->languageId,$this->templeId,$iDisplayStart, $iDisplayLength, $iSortCol_0, $iSortingCols, $sSearch, $sEcho);
-        if ($all) {
+        if ($all)
             $this->response($all, 200);
-        } else {
+        else
             $this->response('Error', 404);
-        }
     }
 
     function pooja_category_add_post(){
-        $conditionArray = array();
-        $conditionArray['category_eng'] = $this->input->post('pooja_category_eng');
-        $conditionArray['temple_id'] = $this->templeId;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories',$conditionArray)){
-            echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In English) already exist']);
+        $where = array('temple_id' => $this->templeId, 'category_eng' => $this->input->post('pooja_category_eng'));
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In english) already exist']);
             return;
         }
-        $conditionArray = array();
-        $conditionArray['category_alt'] = $this->input->post('pooja_category_alt');
-        $conditionArray['temple_id'] = $this->templeId;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories',$conditionArray)){
+        $where = array('temple_id' => $this->templeId, 'category_alt' => $this->input->post('pooja_category_alt'));
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories', $where)){
             echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In Alternate) already exist']);
             return;
         }
-        $poojaCategory['temple_id'] = $this->templeId;
-        $pooja_category_id = $this->Pooja_model->insert_pooja_category($poojaCategory);
-        if (!$pooja_category_id) {
+        $pooja_category = array('temple_id' => $this->templeId);
+        $pooja_category_lang = [];
+        $pooja_category_lang[] = array('category' => $this->input->post('pooja_category_eng'), 'lang_id' => 1);
+        $pooja_category_lang[] = array('category' => $this->input->post('pooja_category_alt'), 'lang_id' => 2);
+        if($this->Pooja_model->insert_pooja_category($pooja_category, $pooja_category_lang))
+            echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'pooja_category']);
+        else
             echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        $poojaCategoryLang = array();
-        $poojaCategoryLang['pooja_category_id'] = $pooja_category_id;
-        $poojaCategoryLang['category'] = $this->input->post('pooja_category_eng');
-        $poojaCategoryLang['lang_id'] = 1;
-        $response = $this->Pooja_model->insert_pooja_category_detail($poojaCategoryLang);
-        $poojaCategoryLang = array();
-        $poojaCategoryLang['pooja_category_id'] = $pooja_category_id;
-        $poojaCategoryLang['category'] = $this->input->post('pooja_category_alt');
-        $poojaCategoryLang['lang_id'] = 2;
-        $response = $this->Pooja_model->insert_pooja_category_detail($poojaCategoryLang);
-        if (!$response) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'pooja_category']);
+        return;
     }
 
     function pooja_category_edit_get(){
-        $pooja_category_id = $this->get('id');
-        $data['editData'] = $this->Pooja_model->get_pooja_category_edit($pooja_category_id);
-        if (!$data) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        $this->response($data);
+        $this->response($this->Pooja_model->get_pooja_category_edit($this->get('id')));
     }
 
     function pooja_category_update_post(){
         $pooja_category_id = $this->input->post('selected_id');
-        $conditionArray = array();
-        $conditionArray['category_eng'] = $this->input->post('pooja_category_eng');
-        $conditionArray['temple_id'] = $this->templeId;
-        $ignoreArray = array();
-        $ignoreArray['id'] = $pooja_category_id;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories',$conditionArray,$ignoreArray)){
-            echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In English) already exist']);
+        $where = array('temple_id' => $this->templeId, 'category_eng' => $this->input->post('pooja_category_eng'), 'id !=' => $pooja_category_id);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In english) already exist']);
             return;
         }
-        $conditionArray = array();
-        $conditionArray['category_alt'] = $this->input->post('pooja_category_alt');
-        $conditionArray['temple_id'] = $this->templeId;
-        $ignoreArray = array();
-        $ignoreArray['id'] = $pooja_category_id;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories',$conditionArray,$ignoreArray)){
-            echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In English) already exist']);
+        $where = array('temple_id' => $this->templeId, 'category_alt' => $this->input->post('pooja_category_alt'), 'id !=' => $pooja_category_id);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In Alternate) already exist']);
             return;
         }
-        if($this->Pooja_model->delete_pooja_category_lang($pooja_category_id)){
-            $poojaCategoryLang = array();
-            $poojaCategoryLang['pooja_category_id'] = $pooja_category_id;
-            $poojaCategoryLang['category'] = $this->input->post('pooja_category_eng');
-            $poojaCategoryLang['lang_id'] = 1;
-            $response = $this->Pooja_model->insert_pooja_category_detail($poojaCategoryLang);;
-            $poojaCategoryLang = array();
-            $poojaCategoryLang['pooja_category_id'] = $pooja_category_id;
-            $poojaCategoryLang['category'] = $this->input->post('pooja_category_alt');
-            $poojaCategoryLang['lang_id'] = 2;
-            $response = $this->Pooja_model->insert_pooja_category_detail($poojaCategoryLang);
-            if (!$response) {
-                echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-                return;
-            }
+        $pooja_category_lang = [];
+        $pooja_category_lang[] = array('category' => $this->input->post('pooja_category_eng'), 'lang_id' => 1, 'pooja_category_id' => $pooja_category_id);
+        $pooja_category_lang[] = array('category' => $this->input->post('pooja_category_alt'), 'lang_id' => 2, 'pooja_category_id' => $pooja_category_id);
+        if($this->Pooja_model->update_pooja_category($pooja_category_id, $pooja_category_lang))
             echo json_encode(['message' => 'success','viewMessage' => 'Successfully Updated', 'grid' => 'pooja_category']);
-        }else{
+        else
             echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
+        return;
     }
 
     function get_pooja_category_drop_down_get(){

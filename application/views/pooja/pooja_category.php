@@ -5,21 +5,17 @@
                                 <div class="tab-pane active">
                                     <div class="add_dtl" style="display: none;">
                                         <form data-validate="parsley" action="" method="post" class="add-edit">
-                             
-                                                    <h3 id="form_title_h2"><?php echo $this->lang->line('add_pooja_category'); ?></h3>
+                                            <h3 id="form_title_h2"><?php echo $this->lang->line('add_pooja_category'); ?></h3>
 											<hr class="hrCustom">
-                                            
-                                                <input type="hidden" id="data_grid" name="data_grid">
-                                                <input type="hidden" id="selected_id" name="selected_id">
+                                            <input type="hidden" id="data_grid" name="data_grid">
+                                            <input type="hidden" id="selected_id" name="selected_id">
 											<div class="row">
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                    <span class="span_label "><?php echo $this->lang->line('pooja_category'); ?> 
-                                                       <span style="color:red;">*</span>
-                                                    </span>
+                                                    <span class="span_label "><?php echo $this->lang->line('pooja_category'); ?> <span style="color:red;">*</span></span>
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            <input type="text"   name="pooja_category_eng" id="pooja_category_eng" class="Bookser_no form-control parsley-validated" data-required="true" placeholder="<?php echo $this->lang->line('pooja_category_english') ?>">
-                                                            <input type="text"   name="pooja_category_alt" id="pooja_category_alt" class="form-control parsley-validated" data-required="true" placeholder="<?php echo $this->lang->line('pooja_category_alternate'); ?>">
+                                                            <input type="text" name="pooja_category_eng" id="pooja_category_eng" class="form-control parsley-validated" data-required="true" placeholder="<?php echo $this->lang->line('pooja_category_english') ?>">
+                                                            <input type="text" name="pooja_category_alt" id="pooja_category_alt" class="form-control parsley-validated" data-required="true" placeholder="<?php echo $this->lang->line('pooja_category_alternate'); ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -33,13 +29,9 @@
                                         </form>
                                     </div>
                                     <div class="dtl_tbl show_form_add"  style="min-height: auto;" >
-                               
-                                                <h3><?php echo $this->lang->line('pooja_categories'); ?></h3>
-<hr class="hrCustom">
-
-                                         
-                                                <button type="button" class="btn btn-warning btn_active btn-sm pull-right plus_btn btnPosition"><?php echo $this->lang->line('add_pooja_category'); ?></button>
-                                    
+                                        <h3><?php echo $this->lang->line('pooja_categories'); ?></h3>
+                                        <hr class="hrCustom">
+                                        <button type="button" class="btn btn-warning btn_active btn-sm pull-right plus_btn btnPosition"><?php echo $this->lang->line('add_pooja_category'); ?></button>
                                         <div class="table-responsive table_div">
                                             <table class="table list-data-table table-bordered scrolling table-striped table-sm" id="pooja_category" table="pooja_category" action_url="<?php echo base_url() ?>service/Pooja_category_data/pooja_category_details">
                                                 <thead>

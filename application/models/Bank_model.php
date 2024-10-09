@@ -389,9 +389,9 @@ class Bank_model extends CI_Model {
         //* Array of database columns which should be read and sent back to DataTables. Use a space where
         //* you want to insert a non-database field (for example a counter or static image)
         if($language == '1'){
-            $aColumns = array('id', 'id', 'category_eng', 'ledger_name', 'status');
+            $aColumns = array('id', 'id', 'category_eng', 'status');
         }else{
-            $aColumns = array('id', 'id', 'category_alt', 'ledger_name', 'status');
+            $aColumns = array('id', 'id', 'category_alt', 'status');
         }
 
         // Paging
@@ -455,49 +455,32 @@ class Bank_model extends CI_Model {
         }
         return $output;
     }
-    function insert_donation($data, $ledgerId){
+    function insert_donation($donation_category, $donation_category_lang){
         $this->db->trans_start();
 		$this->db->trans_strict();
-        $this->db->insert('donation_category', $data);
-        $last_id = $this->db->insert_id();
-        $head_mapping = array(
-            'accounting_head_id'=> $ledgerId,
-            'table_id'          => 8,
-            'mapped_head_id'    => $last_id
-        );
-        $this->db->insert('accounting_head_mapping',$head_mapping);
-		$this->db->trans_complete(); 
+        $this->db->insert('donation_category', $donation_category);
+        $donation_category_id = $this->db->insert_id();
+        if(!empty($donation_category_lang)){
+            foreach($donation_category_lang as $key => $lang)
+                $donation_category_lang[$key]['donation_category_id'] = $donation_category_id;
+            $this->db->insert_batch('donation_category_lang', $donation_category_lang);
+        }
+        $this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
 			$this->db->trans_rollback();
 			return FALSE;
 		}else {
 			$this->db->trans_commit();
-			return $last_id;
+			return true;
 		}
     }
 
-    function update_donation($id,$ledgerId){
+    function update_donation($donation_category_id, $donation_category_lang){
         $this->db->trans_start();
 		$this->db->trans_strict();
-        $headMapping = array(
-            'accounting_head_id'=> $ledgerId,
-            'table_id'          => 8,
-            'mapped_head_id'    => $id
-        );
-
-        $headMappingSearch = array('table_id' => 8, 'mapped_head_id' => $id, 'status' => 1);
-
-        $accountingHeadMapping = $this->db->select('*')->where($headMappingSearch)->get('accounting_head_mapping')->row_array();
-        // echo "<pre>"; print_r($accountingHeadMapping); exit;
-        if(!empty($accountingHeadMapping)){
-            if($accountingHeadMapping['accounting_head_id'] != $ledgerId){
-                $status = array('status' => 0);
-                $this->db->where('id',$accountingHeadMapping['id'])->update('accounting_head_mapping', $status);
-                $this->db->insert('accounting_head_mapping', $headMapping);
-            }
-        } else {
-            $this->db->insert('accounting_head_mapping', $headMapping);
-        }
+        $this->db->where('donation_category_id', $donation_category_id)->delete('donation_category_lang');
+        if(!empty($donation_category_lang))
+            $this->db->insert_batch('donation_category_lang', $donation_category_lang);
         $this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
 			$this->db->trans_rollback();
@@ -508,16 +491,10 @@ class Bank_model extends CI_Model {
 		}
 	}
 
-    function insert_donation_detail($data){
-        $response = $this->db->insert('donation_category_lang', $data);
-        return $response;
-    }
     function get_donation_edit($id){
         return $this->db->select('*')->where('id', $id)->get('view_donation')->row_array();
     }
-    function delete_donation_lang($id){
-        return $this->db->where('donation_category_id',$id)->delete('donation_category_lang');
-    }
+
     function get_donation_list($temple_id,$lang_id){
         $this->db->select('donation_category.id,donation_category_lang.category');
         $this->db->from('donation_category');

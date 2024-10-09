@@ -34,56 +34,58 @@ class Donation_data extends REST_Controller {
     }
 
     function donation_add_post(){
-        $donationData['status'] = '1';
-        $donationData['temple_id'] = $this->session->userdata('temple');
-        $accountHead    = $this->input->post('account_name1');
-        $conditionArray = array();
-        $conditionArray['category_eng'] = $this->input->post('name_eng');
-        $conditionArray['temple_id'] = $this->templeId;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_donation',$conditionArray)){
+        $where = array('temple_id' => $this->templeId, 'category_eng' => $this->input->post('name_eng'));
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_donation', $where)){
             echo json_encode(['message' => 'error','viewMessage' => 'Donation Category(In English) already exist']);
             return;
         }
-        $conditionArray = array();
-        $conditionArray['category_alt'] = $this->input->post('name_alt');
-        $conditionArray['temple_id'] = $this->templeId;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_donation',$conditionArray)){
+        $where = array('temple_id' => $this->templeId, 'category_alt' => $this->input->post('name_alt'));
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_donation', $where)){
             echo json_encode(['message' => 'error','viewMessage' => 'Donation Category(In Alternate) already exist']);
             return;
         }
-        $donation_id = $this->Bank_model->insert_donation($donationData,$accountHead);
-        if (!$donation_id) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
+        $donationData = array('temple_id' => $this->templeId);
         $donationLang = array();
-        $donationLang['donation_category_id'] = $donation_id;
-        $donationLang['category'] = $this->input->post('name_eng');
-        $donationLang['lang_id'] = 1;
-        $response = $this->Bank_model->insert_donation_detail($donationLang);
-        $donationLang = array();
-        $donationLang['donation_category_id'] = $donation_id;
-        $donationLang['category'] = $this->input->post('name_alt');
-        $donationLang['lang_id'] = 2;
-        $response = $this->Bank_model->insert_donation_detail($donationLang);
-        if (!$response) {
+        $donationLang[] = array('category' => $this->input->post('name_eng'), 'lang_id' => 1);
+        $donationLang[] = array('category' => $this->input->post('name_alt'), 'lang_id' => 2);
+        if($this->Bank_model->insert_donation($donationData, $donationLang))
+            echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'donation_category']);
+        else
             echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'donation_category']);
+        return;
     }
 
     function donation_edit_get(){
-        $donation_id = $this->get('id');
-        $data['editData'] = $this->Bank_model->get_donation_edit($donation_id);
-        if (!$data) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        $this->response($data);
+        $this->response($this->Bank_model->get_donation_edit($this->get('id')));
     }
 
     function donation_update_post(){
+        $donation_id = $this->input->post('selected_id');
+        $where = array('temple_id' => $this->templeId, 'category_eng' => $this->input->post('name_eng'), 'id !=' => $donation_id);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_donation', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Donation Category(In english) already exist']);
+            return;
+        }
+        $where = array('temple_id' => $this->templeId, 'category_alt' => $this->input->post('name_alt'), 'id !=' => $donation_id);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_donation', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Donation Category(In Alternate) already exist']);
+            return;
+        }
+        $donationLang = [];
+        $donationLang[] = array('category' => $this->input->post('name_eng'), 'lang_id' => 1, 'donation_category_id' => $donation_id);
+        $donationLang[] = array('category' => $this->input->post('name_alt'), 'lang_id' => 2, 'donation_category_id' => $donation_id);
+        if($this->Bank_model->update_donation($donation_id, $donationLang))
+            echo json_encode(['message' => 'success','viewMessage' => 'Successfully Updated', 'grid' => 'donation_category']);
+        else
+            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
+        return;
+
+
+
+
+
+
+
         $donation_id = $this->input->post('selected_id');
         if($this->Bank_model->delete_donation_lang($donation_id)){
             $accountHead    = $this->input->post('account_name1');

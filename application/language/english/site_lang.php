@@ -1201,10 +1201,8 @@ $lang['fd_account'] = "FD Account";
 $lang['sb_bank'] = "SB Bank";
 $lang['sb_account'] = "SB Account";
 
-
 $lang['fixed_annadhanam'] = "Fixed Annadhanam";
 $lang['normal_annadhanam'] = "Normal Annadhanam";
-
 
 #Income Expense Reports new
 $lang['bank_withdrawals'] = "Bank Withdrawals";
@@ -1226,3 +1224,5 @@ $lang['fd_deposits'] = "FD Deposits";
 $lang['total_deposits'] = "Total Deposits";
 
 $lang['total_fd_varavu'] = "Total FD Varavu";
+
+$lang['dashboard_today_collection'] = 'Todays software receipt collection amount';

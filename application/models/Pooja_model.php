@@ -13,13 +13,10 @@ class Pooja_model extends CI_Model {
         $sTable = 'view_pooja_categories';
         //* Array of database columns which should be read and sent back to DataTables. Use a space where
         //* you want to insert a non-database field (for example a counter or static image)
-       if($lang==1){
-        $aColumns = array('id','category_eng', 'category_alt', 'status');
-       }else{
-        $aColumns = array('id','category_alt', 'category_alt', 'status');
-
-       }
-
+        if($lang == 1)
+            $aColumns = array('id','category_eng', 'category_alt', 'status');
+        else
+            $aColumns = array('id','category_alt', 'category_alt', 'status');
         // Paging
         if (isset($iDisplayStart) && $iDisplayLength != '-1') {
             $this->db->limit($this->db->escape_str($iDisplayLength), $this->db->escape_str($iDisplayStart));
@@ -30,7 +27,6 @@ class Pooja_model extends CI_Model {
                 $iSortCol = $this->input->get_post('iSortCol_' . $i, TRUE);
                 $bSortable = $this->input->get_post('bSortable_' . intval($iSortCol), TRUE);
                 $sSortDir = $this->input->get_post('sSortDir_' . $i, TRUE);
-
                 if ($bSortable == 'true') {
                     $this->db->order_by($aColumns[intval($this->db->escape_str($iSortCol))], $this->db->escape_str($sSortDir));
                 }
@@ -81,22 +77,44 @@ class Pooja_model extends CI_Model {
         return $output;
     }
 
-    function insert_pooja_category($data){
-        $this->db->insert('pooja_category', $data);
-        return $this->db->insert_id();
-    }
-
-    function insert_pooja_category_detail($data){
-        $response = $this->db->insert('pooja_category_lang', $data);
-        return $response;
+    function insert_pooja_category($pooja_category, $pooja_category_lang){
+        $this->db->trans_start();
+		$this->db->trans_strict();
+        $this->db->insert('pooja_category', $pooja_category);
+        $pooja_category_id = $this->db->insert_id();
+        if(!empty($pooja_category_lang)){
+            foreach($pooja_category_lang as $key => $lang)
+                $pooja_category_lang[$key]['pooja_category_id'] = $pooja_category_id;
+            $this->db->insert_batch('pooja_category_lang', $pooja_category_lang);
+        }
+        $this->db->trans_complete(); 
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			return FALSE;
+		}else {
+			$this->db->trans_commit();
+			return true;
+		}
     }
 
     function get_pooja_category_edit($id){
-        return $this->db->select('*')->where('id', $id)->get('view_pooja_categories')->row_array();
+        return $this->db->where('id', $id)->get('view_pooja_categories')->row_array();
     }
 
-    function delete_pooja_category_lang($id){
-        return $this->db->where('pooja_category_id',$id)->delete('pooja_category_lang');
+    function update_pooja_category($pooja_category_id, $pooja_category_lang){
+        $this->db->trans_start();
+		$this->db->trans_strict();
+        $this->db->where('pooja_category_id', $pooja_category_id)->delete('pooja_category_lang');
+        if(!empty($pooja_category_lang))
+            $this->db->insert_batch('pooja_category_lang', $pooja_category_lang);
+        $this->db->trans_complete(); 
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			return FALSE;
+		}else {
+			$this->db->trans_commit();
+			return true;
+		}
     }
 
     function get_pooja_category_list($lang_id,$temple){
@@ -113,6 +131,7 @@ class Pooja_model extends CI_Model {
         $this->db->order_by('pooja_category_lang.category', 'asc');
         return $this->db->get()->result();
     }
+
     function get_pooja_category_list1($lang_id,$temple){
         $this->db->select('pooja_category.id,pooja_category_lang.category,temple_master_lang.temple_id,temple_master_lang.temple');
         $this->db->from('pooja_category');

@@ -34,7 +34,10 @@
                                                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                                     <span class="span_label "><?php echo $this->lang->line('pooja_type'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group">  
-                                                        <select name="type" id="type" class="form-control parsley-validated" data-required="true"></select>
+                                                        <select name="type" id="type" class="form-control parsley-validated" data-required="true">
+                                                            <option value="Single">Single</option>
+                                                            <option value="Multiple">Multiple</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
@@ -113,7 +116,7 @@
                                             <div class="col-md-1 col-sm-6 col-12">
                                                 <br>
                                                 <div class="form-group">
-                                                    <button class="btn btn-primary" onclick="get_scheduled_pooja_list()"><?php echo $this->lang->line('filter'); ?></button>
+                                                    <button class="btn btn-primary" onclick="filter_pooja_list()"><?php echo $this->lang->line('filter'); ?></button>
                                                 </div>
                                             </div>
                                         </div>

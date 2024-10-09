@@ -93,61 +93,37 @@ class Stock_model extends CI_Model {
         return $output;
     }
 
-    function insert_assets($data, $ledgerId) {
+    function insert_assets($asset_master, $asset_master_lang) {
         $this->db->trans_start();
 		$this->db->trans_strict();
-        $this->db->insert('asset_master', $data);
-        $last_id = $this->db->insert_id();
-        // $head_mapping = array(
-        //     'accounting_head_id'=> $ledgerId,
-        //     'table_id'          => 2,
-        //     'mapped_head_id'    => $last_id
-        // );
-        // $this->db->insert('accounting_head_mapping',$head_mapping);
-		$this->db->trans_complete(); 
+        $this->db->insert('asset_master', $asset_master);
+        $asset_master_id = $this->db->insert_id();
+        if(!empty($asset_master_lang)){
+            foreach($asset_master_lang as $key => $lang)
+                $asset_master_lang[$key]['asset_master_id'] = $asset_master_id;
+            $this->db->insert_batch('asset_master_lang', $asset_master_lang);
+        }
+        $this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
 			$this->db->trans_rollback();
 			return FALSE;
 		}else {
 			$this->db->trans_commit();
-			return $last_id;
+			return true;
 		}
     }
 
-    function insert_assets_detail($data){
-        $response = $this->db->insert('asset_master_lang', $data);
-        return $response;
-    }
-
     function get_assets_edit($id){
-        return $this->db->select('*')->where('id', $id)->get('view_assets')->row_array();
+        return $this->db->where('id', $id)->get('view_assets')->row_array();
     }
 
-    function update_assets($id,$data){
+    function update_assets($asset_master_id, $asset_master, $asset_master_lang){
         $this->db->trans_start();
 		$this->db->trans_strict();
-        $this->db->where('id',$id)->update('asset_master', $data);
-        // $headMapping = array(
-        //     'accounting_head_id'=> $ledgerId,
-        //     'table_id'          => 2,
-        //     'mapped_head_id'    => $id
-        // );
-
-        // $headMappingSearch = array('table_id' => 2, 'mapped_head_id' => $id, 'status' => 1);
-
-        // $accountingHeadMapping = $this->db->select('*')->where($headMappingSearch)->get('accounting_head_mapping')->row_array();
-        // // echo "<pre>"; print_r($accountingHeadMapping['accounting_head_id']); exit;
-        // if(!empty($accountingHeadMapping)){
-        //     // echo "<pre>"; print_r($accountingHeadMapping['id']); exit;
-        //     if($accountingHeadMapping['accounting_head_id'] != $ledgerId){
-        //         // echo "<pre>"; print_r($ledgerId); exit;
-        //         $status = array('status' => 0);
-        //         $this->db->where('id',$accountingHeadMapping['id'])->update('accounting_head_mapping', $status);
-        //         $this->db->insert('accounting_head_mapping', $headMapping);
-        //     }
-        // } else {
-        //     $this->db->insert('accounting_head_mapping', $headMapping);
-        // }
+        $this->db->where('id', $asset_master_id)->update('asset_master', $asset_master);
+        $this->db->where('asset_master_id', $asset_master_id)->delete('asset_master_lang');
+        if(!empty($asset_master_lang))
+            $this->db->insert_batch('asset_master_lang', $asset_master_lang);
         $this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
 			$this->db->trans_rollback();

@@ -126,13 +126,3 @@
         </div>
     </section>
 </section>
-<style>
-    .accountselect{
-        position: relative;
-    }
-    .accountselect ul {
-        position: absolute;
-        bottom: -2px;
-        height: 0px;
-    }
-</style>

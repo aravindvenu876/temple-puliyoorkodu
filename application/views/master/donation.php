@@ -15,18 +15,15 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <input type="text" name="name_eng" id="name_eng"   class="Bookser_no form-control parsley-validated" data-required="true" placeholder="<?php echo $this->lang->line('in_english'); ?>">
-                                                            <input type="text" name="name_alt" id="name_alt"  class="form-control parsley-validated" data-required="true" placeholder="<?php echo $this->lang->line('in_alternate'); ?>"> </div>
+                                                            <input type="text" name="name_alt" id="name_alt"  class="form-control parsley-validated" data-required="true" placeholder="<?php echo $this->lang->line('in_alternate'); ?>"> 
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12"> <span class="span_label "><?php echo $this->lang->line('account_ledger'); ?><span class="asterisk">*</span></span>
-                                                    <div class="form-group accountselect">
-                                                        <select name="account_name1" id="account_name1" class="form-control parsley-validated" data-required="true"></select>
-                                                    </div>
-                                                </div>
-                                           </div>
+                                            </div>
                                             <div class="row ">
                                                 <div class="col-md-12 col-sm-12 col-12 ">
-                                                    <button class="btn btn-primary saveButton"><?php echo $this->lang->line('save'); ?></button> <a class="btn btn-default" id="cancelEdit"><?php echo $this->lang->line('cancel'); ?></a> </div>
+                                                    <button class="btn btn-primary saveButton"><?php echo $this->lang->line('save'); ?></button> <a class="btn btn-default" id="cancelEdit"><?php echo $this->lang->line('cancel'); ?></a> 
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -41,7 +38,6 @@
                                                         <th>ID</th>
                                                         <th>Code</th>
                                                         <th><?php echo $this->lang->line('donation'); ?></th>
-                                                        <th>Ledger</th>
                                                         <th><?php echo $this->lang->line('status'); ?></th>
                                                         <th><?php echo $this->lang->line('action'); ?></th>
                                                     </tr>
@@ -59,13 +55,3 @@
         </div>
     </section>
 </section>
-<style>
-    .accountselect{
-        position: relative;
-    }
-    .accountselect ul {
-        position: absolute;
-        bottom: -2px;
-        height: 0px;
-    }
-</style>

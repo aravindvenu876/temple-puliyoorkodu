@@ -18,7 +18,6 @@ class Unit_model extends CI_Model {
         }else{
             $aColumns = array('id','unit_alt', 'notation', 'status');
         }
-
         // Paging
         if (isset($iDisplayStart) && $iDisplayLength != '-1') {
             $this->db->limit($this->db->escape_str($iDisplayLength), $this->db->escape_str($iDisplayStart));
@@ -79,26 +78,45 @@ class Unit_model extends CI_Model {
         return $output;
     }
 
-    function insert_unit($data){
-        $this->db->insert('unit', $data);
-        return $this->db->insert_id();
+    function insert_unit_master($unit_master, $unit_lang){
+        $this->db->trans_start();
+		$this->db->trans_strict();
+        $this->db->insert('unit', $unit_master);
+        $unit_id = $this->db->insert_id();
+        if(!empty($unit_lang)){
+            foreach($unit_lang as $key => $lang)
+                $unit_lang[$key]['unit_id'] = $unit_id;
+            $this->db->insert_batch('unit_lang', $unit_lang);
+        }
+        $this->db->trans_complete(); 
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			return FALSE;
+		}else {
+			$this->db->trans_commit();
+			return true;
+		}
     }
 
-    function insert_unit_detail($data){
-        $response = $this->db->insert('unit_lang', $data);
-        return $response;
+    function unit_edit($id){
+        return $this->db->where('id', $id)->get('view_unit')->row_array();
     }
 
-    function get_unit_edit($id){
-        return $this->db->select('*')->where('id', $id)->get('view_unit')->row_array();
-    }
-
-    function update_unit($id,$data){
-        return $this->db->where('id',$id)->update('unit',$data);
-    }
-
-    function delete_unit_lang($id){
-        return $this->db->where('unit_id',$id)->delete('unit_lang');
+    function update_unit_master($unit_id, $unit_master, $unit_lang){
+        $this->db->trans_start();
+		$this->db->trans_strict();
+        $this->db->where('id', $unit_id)->update('unit', $unit_master);
+        $this->db->where('unit_id', $unit_id)->delete('unit_lang');
+        if(!empty($unit_lang))
+            $this->db->insert_batch('unit_lang', $unit_lang);
+        $this->db->trans_complete(); 
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			return FALSE;
+		}else {
+			$this->db->trans_commit();
+			return true;
+		}
     }
 
     function get_unit_list($lang_id){

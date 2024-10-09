@@ -26,32 +26,30 @@
     viewData('<?php echo base_url() ?>service/Unit_data/unit_edit', function(data) {
         detail_view(data);
     });
-
     function detail_edit(data) { //////////////////////////// Form and Grid ///////////////////////////////////////////////
         $(".plus_btn").trigger('click');
         $("#form_title_h2").html("<?php echo $this->lang->line('update_unit'); ?>");
         $(".saveButton").text("<?php echo $this->lang->line('update'); ?>");
         $("form.add-edit").attr('action', "<?php echo base_url() ?>service/Unit_data/unit_update");
-        $('#unit_eng').val(data.editData.unit_eng);
-        $('#unit_alt').val(data.editData.unit_alt);
-        $('#unit_notation').val(data.editData.notation);
+        $('#unit_eng').val(data.unit_eng);
+        $('#unit_alt').val(data.unit_alt);
+        $('#unit_notation').val(data.notation);
         $("#data_grid").val(oTable.attr("id"));
-        $("#selected_id").val((data.editData.id));
+        $("#selected_id").val((data.id));
     }
-
     function detail_view(data) {
         var viewdata = "";
         viewdata += "<tr>";
         viewdata += "<th><?php echo $this->lang->line('unit_english'); ?></th>";
-        viewdata += "<td>" + data.editData.unit_eng + "</td>";
+        viewdata += "<td>" + data.unit_eng + "</td>";
         viewdata += "</tr>";
         viewdata += "<tr>";
         viewdata += "<th><?php echo $this->lang->line('unit_alternate'); ?></th>";
-        viewdata += "<td>" + data.editData.unit_alt + "</td>";
+        viewdata += "<td>" + data.unit_alt + "</td>";
         viewdata += "</tr>";
         viewdata += "<tr>";
         viewdata += "<th><?php echo $this->lang->line('unit_notation'); ?></th>";
-        viewdata += "<td>" + data.editData.notation + "</td>";
+        viewdata += "<td>" + data.notation + "</td>";
         viewdata += "</tr>";
         $("#viewModalContent").html(viewdata);
         $('#viewModal').modal('show');

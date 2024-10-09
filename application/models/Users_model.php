@@ -10,10 +10,10 @@ class Users_model extends CI_Model {
     }
 
     function get_all_users($temple,$iDisplayStart, $iDisplayLength, $iSortCol_0, $iSortingCols, $sSearch, $sEcho){
-        $sTable = 'view_users';
+        $sTable = 'users';
         //* Array of database columns which should be read and sent back to DataTables. Use a space where
         //* you want to insert a non-database field (for example a counter or static image)
-        $aColumns = array('id','name', 'username', 'plain', 'last_login','banned');
+        $aColumns = array('id','name', 'phone', 'username', 'plain', 'last_login', 'id', 'banned');
 
         // Paging
         if (isset($iDisplayStart) && $iDisplayLength != '-1') {
@@ -50,7 +50,6 @@ class Users_model extends CI_Model {
             $this->db->where($string);
         }
         $this->db->where('id !=',1);
-        $this->db->where('temple_id', $temple);
         $this->db->order_by('id', 'asc');
         $this->db->select('SQL_CALC_FOUND_ROWS ' . str_replace(' , ', ' ', implode(', ', $aColumns)), FALSE);
         $rResult = $this->db->get($sTable);

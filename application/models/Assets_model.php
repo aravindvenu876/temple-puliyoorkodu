@@ -76,22 +76,44 @@ class Assets_model extends CI_Model {
         return $output;
     }
 
-    function insert_asset_category($data){
-        $this->db->insert('asset_category', $data);
-        return $this->db->insert_id();
-    }
-
-    function insert_asset_category_detail($data){
-        $response = $this->db->insert('asset_category_lang', $data);
-        return $response;
+    function insert_asset_category($asset_category, $asset_category_lang){
+        $this->db->trans_start();
+		$this->db->trans_strict();
+        $this->db->insert('asset_category', $asset_category);
+        $asset_category_id = $this->db->insert_id();
+        if(!empty($asset_category_lang)){
+            foreach($asset_category_lang as $key => $lang)
+                $asset_category_lang[$key]['asset_category_id'] = $asset_category_id;
+            $this->db->insert_batch('asset_category_lang', $asset_category_lang);
+        }
+        $this->db->trans_complete(); 
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			return FALSE;
+		}else {
+			$this->db->trans_commit();
+			return true;
+		}
     }
 
     function get_asset_category_edit($id){
-        return $this->db->select('*')->where('id', $id)->get('view_assets_categories')->row_array();
+        return $this->db->where('id', $id)->get('view_assets_categories')->row_array();
     }
 
-    function delete_asset_category_lang($id){
-        return $this->db->where('asset_category_id',$id)->delete('asset_category_lang');
+    function update_asset_category($asset_category_id, $asset_category_lang){
+        $this->db->trans_start();
+		$this->db->trans_strict();
+        $this->db->where('asset_category_id', $asset_category_id)->delete('asset_category_lang');
+        if(!empty($asset_category_lang))
+            $this->db->insert_batch('asset_category_lang', $asset_category_lang);
+        $this->db->trans_complete(); 
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			return FALSE;
+		}else {
+			$this->db->trans_commit();
+			return true;
+		}
     }
 
     function get_asset_category_list($lang_id,$temple){

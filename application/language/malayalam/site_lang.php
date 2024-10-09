@@ -1170,8 +1170,7 @@ $lang['book_no'] = "പുസ്തകം നമ്പർ";
 $lang['update_receipt_book_data'] = "റിസപ്റ്റ് ബുക്ക് ഡാറ്റ അപ്ഡേറ്റുചെയ്യുക";
 $lang['rate_type'] = "നിരക്ക് തരം";
 
-// $lang['in_english'] = "In English";
-// $lang['in_alternate'] = "In Alternate";
+/* staff_leave_status */
 $lang['leave_scheme'] = "ലീവ് സ്കീം ";
 $lang['allowed_leave_count'] = "അലോവെഡ് ലീവ് കൌണ്ട് ";
 $lang['leave_taken'] = "ലീവ്  ടേക്കൺ ";
@@ -1197,12 +1196,13 @@ $lang['expense_withdrawal'] = "ചെലവ് പിൻവലിക്കൽ ";
 $lang['cheque_withdrawal'] = "ചെക്ക് പിൻവലിക്കൽ ";
 $lang['add_sb_to_fd_transfer'] = "Add SB to FD";
 $lang['add_fd_to_sb_transfer'] = "Add FD to SB";
+$lang['fd_bank'] = "FD Bank";
 $lang['fd_account'] = "FD Account";
-
+$lang['sb_bank'] = "SB Bank";
+$lang['sb_account'] = "SB Account";
 
 $lang['fixed_annadhanam'] = "ഫിക്സഡ് അന്നദാനം";
 $lang['normal_annadhanam'] = "നോർമൽ അന്നദാനം";
-
 
 #Income Expense Reports new
 $lang['bank_withdrawals'] = "ബാങ്ക് പിൻവലിക്കൽ";
@@ -1224,3 +1224,5 @@ $lang['fd_deposits'] = "FD നിക്ഷേപം";
 $lang['total_deposits'] = "ആകെ നിക്ഷേപം";
 
 $lang['total_fd_varavu'] = "ആകെ FD വരവ്";
+
+$lang['dashboard_today_collection'] = 'ഇന്നത്തെ സോഫ്റ്റ്‌വെയർ രസീത് ശേഖരണ തുക';

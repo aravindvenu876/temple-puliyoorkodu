@@ -34,93 +34,51 @@ class Asset_category_data extends REST_Controller {
     }
 
     function asset_category_add_post(){
-        $conditionArray = array();
-        $conditionArray['category_eng'] = $this->input->post('asset_category_eng');
-        $conditionArray['temple_id'] = $this->templeId;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets_categories',$conditionArray)){
-            echo json_encode(['message' => 'error','viewMessage' => 'Asset Category(In English) already exist']);
+        $where = array('temple_id' => $this->templeId, 'category_eng' => $this->input->post('asset_category_eng'));
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In english) already exist']);
             return;
         }
-        $conditionArray = array();
-        $conditionArray['category_alt'] = $this->input->post('asset_category_alt');
-        $conditionArray['temple_id'] = $this->templeId;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets_categories',$conditionArray)){
-            echo json_encode(['message' => 'error','viewMessage' => 'Asset Category(In Alternate) already exist']);
+        $where = array('temple_id' => $this->templeId, 'category_alt' => $this->input->post('asset_category_alt'));
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_pooja_categories', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Pooja Category(In Alternate) already exist']);
             return;
         }
-        $assetCategory['temple_id'] = $this->templeId;
-        $asset_category_id = $this->Assets_model->insert_asset_category($assetCategory);
-        if (!$asset_category_id) {
+        $asset_category = array('temple_id' => $this->templeId);
+        $asset_category_lang = [];
+        $asset_category_lang[] = array('category' => $this->input->post('asset_category_eng'), 'lang_id' => 1);
+        $asset_category_lang[] = array('category' => $this->input->post('asset_category_alt'), 'lang_id' => 2);
+        if($this->Assets_model->insert_asset_category($asset_category, $asset_category_lang))
+            echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'asset_category']);
+        else
             echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        $assetCategoryLang = array();
-        $assetCategoryLang['asset_category_id'] = $asset_category_id;
-        $assetCategoryLang['category'] = $this->input->post('asset_category_eng');
-        $assetCategoryLang['lang_id'] = 1;
-        $response = $this->Assets_model->insert_asset_category_detail($assetCategoryLang);
-        $assetCategoryLang = array();
-        $assetCategoryLang['asset_category_id'] = $asset_category_id;
-        $assetCategoryLang['category'] = $this->input->post('asset_category_alt');
-        $assetCategoryLang['lang_id'] = 2;
-        $response = $this->Assets_model->insert_asset_category_detail($assetCategoryLang);
-        if (!$response) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'asset_category']);
+        return;
     }
 
     function asset_category_edit_get(){
-        $asset_category_id = $this->get('id');
-        $data['editData'] = $this->Assets_model->get_asset_category_edit($asset_category_id);
-        if (!$data) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        $this->response($data);
+        $this->response($this->Assets_model->get_asset_category_edit($this->get('id')));
     }
 
     function asset_category_update_post(){
         $asset_category_id = $this->input->post('selected_id');
-        $conditionArray = array();
-        $conditionArray['category_eng'] = $this->input->post('item_category_eng');
-        $conditionArray['temple_id'] = $this->templeId;
-        $ignoreArray = array();
-        $ignoreArray['id'] = $asset_category_id;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets_categories',$conditionArray,$ignoreArray)){
-            echo json_encode(['message' => 'error','viewMessage' => 'Asset Category(In English) already exist']);
+        $where = array('temple_id' => $this->templeId, 'category_eng' => $this->input->post('asset_category_eng'), 'id !=' => $asset_category_id);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets_categories', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Asset Category(In english) already exist']);
             return;
         }
-        $conditionArray = array();
-        $conditionArray['category_alt'] = $this->input->post('item_category_alt');
-        $conditionArray['temple_id'] = $this->templeId;
-        $ignoreArray = array();
-        $ignoreArray['id'] = $asset_category_id;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets_categories',$conditionArray,$ignoreArray)){
-            echo json_encode(['message' => 'error','viewMessage' => 'Asset Category(In English) already exist']);
+        $where = array('temple_id' => $this->templeId, 'category_alt' => $this->input->post('asset_category_alt'), 'id !=' => $asset_category_id);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets_categories', $where)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Asset Category(In Alternate) already exist']);
             return;
         }
-        if($this->Assets_model->delete_asset_category_lang($asset_category_id)){
-            $assetCategoryLang = array();
-            $assetCategoryLang['asset_category_id'] = $asset_category_id;
-            $assetCategoryLang['category'] = $this->input->post('asset_category_eng');
-            $assetCategoryLang['lang_id'] = 1;
-            $response = $this->Assets_model->insert_asset_category_detail($assetCategoryLang);
-            $assetCategoryLang = array();
-            $assetCategoryLang['asset_category_id'] = $asset_category_id;
-            $assetCategoryLang['category'] = $this->input->post('asset_category_alt');
-            $assetCategoryLang['lang_id'] = 2;
-            $response = $this->Assets_model->insert_asset_category_detail($assetCategoryLang);
-            if (!$response) {
-                echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-                return;
-            }
+        $asset_category_lang = [];
+        $asset_category_lang[] = array('category' => $this->input->post('asset_category_eng'), 'lang_id' => 1, 'asset_category_id' => $asset_category_id);
+        $asset_category_lang[] = array('category' => $this->input->post('asset_category_alt'), 'lang_id' => 2, 'asset_category_id' => $asset_category_id);
+        if($this->Assets_model->update_asset_category($asset_category_id, $asset_category_lang))
             echo json_encode(['message' => 'success','viewMessage' => 'Successfully Updated', 'grid' => 'asset_category']);
-        }else{
+        else
             echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
+        return;
     }
 
     function get_asset_category_drop_down_get(){

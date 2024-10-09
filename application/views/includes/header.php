@@ -25,7 +25,7 @@
     add_js('assets/js/jquery.dataTables.min.js');
     add_js('assets/js/parsley.js');
     add_js('assets/js/moment.js');
-    add_js('assets/js/bootstrap-datepicker.js"');
+    add_js('assets/js/bootstrap-datepicker.js');
     add_js('assets/js/jquery-confirm.min.js');
     add_js('assets/js/form.js');
     add_js('assets/js/toaster.js');
@@ -40,7 +40,6 @@
     add_js('assets/js/jquery.marquee.js');
     add_js('assets/js/Chart.min.js');
     add_js('assets/js/core.js');
-    add_js('assets/js/charts.js');
     add_js('assets/js/animated.js');
     add_js('assets/js/select2.min.js');
     function add_css($url) {

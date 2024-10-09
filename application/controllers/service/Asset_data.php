@@ -38,106 +38,80 @@ class Asset_data extends REST_Controller {
     }
 
     function assets_add_post(){
-        $conditionArray = array();
-        $conditionArray['name_eng'] = $this->input->post('asset_eng');
-        $conditionArray['temple_id'] = $this->templeId;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets',$conditionArray)){
+        $conditionArray = array('name_eng'=> $this->input->post('asset_eng'), 'temple_id' => $this->templeId);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets', $conditionArray)){
             echo json_encode(['message' => 'error','viewMessage' => 'Asset Name(In English) already exist']);
             return;
         }
-        $conditionArray = array();
-        $conditionArray['name_alt'] = $this->input->post('asset_alt');
-        $conditionArray['temple_id'] = $this->templeId;
+        $conditionArray = array('name_alt'=> $this->input->post('asset_alt'), 'temple_id' => $this->templeId);
         if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets',$conditionArray)){
             echo json_encode(['message' => 'error','viewMessage' => 'Asset Name(In Alternate) already exist']);
             return;
         }
-        $assetData['asset_category_id'] = $this->input->post('category');
-        $assetData['type'] = $this->input->post('type');
-        $assetData['unit'] = $this->input->post('unit');
-        $assetData['price'] = $this->input->post('price');
-        $accountHead    = $this->input->post('account_name1');
-        $asset_id = $this->Stock_model->insert_assets($assetData,$accountHead);
-        $assetDataLang = array();
-        $assetDataLang['asset_master_id'] = $asset_id;
-        $assetDataLang['asset_name'] = $this->input->post('asset_eng');
-        $assetDataLang['description'] = $this->input->post('description_eng');
-        $assetDataLang['lang_id'] = 1;
-        $response = $this->Stock_model->insert_assets_detail($assetDataLang);
-        $assetDataLang = array();
-        $assetDataLang['asset_master_id'] = $asset_id;
-        $assetDataLang['asset_name'] = $this->input->post('asset_alt');
-        $assetDataLang['description'] = $this->input->post('description_alt');
-        $assetDataLang['lang_id'] = 2;
-        $response = $this->Stock_model->insert_assets_detail($assetDataLang);
-        if (!$response) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'assets']);
+        $assetData = array(
+            'asset_category_id' => $this->input->post('category'),
+            'type' => $this->input->post('type'),
+            'unit' => $this->input->post('unit'),
+            'price' => $this->input->post('price')
+        );
+        $assetDataLang = [];
+        $assetDataLang[] = array(
+            'asset_name' => $this->input->post('asset_eng'),
+            'description' => $this->input->post('description_eng'),
+            'lang_id' => 1
+        );
+        $assetDataLang[] = array(
+            'asset_name' => $this->input->post('asset_alt'),
+            'description' => $this->input->post('description_alt'),
+            'lang_id' => 2
+        );
+        if($this->Stock_model->insert_assets($assetData, $assetDataLang))
+            echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'assets']);
+        else
+            echo json_encode(['message' => 'error','viewMessage' => 'Internal Error Occured']);
+        return;
     }
 
     function assets_edit_get(){
-        $asset_id = $this->get('id');
-        $data['editData'] = $this->Stock_model->get_assets_edit($asset_id);
-        if (!$data) {
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
-        $this->response($data);
+        $this->response($this->Stock_model->get_assets_edit($this->get('id')));
     }
 
     function assets_update_post(){
         $asset_id = $this->input->post('selected_id');
-        $conditionArray = array();
-        $conditionArray['name_eng'] = $this->input->post('asset_eng');
-        $conditionArray['temple_id'] = $this->templeId;
-        $ignoreArray = array();
-        $ignoreArray['id'] = $asset_id;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets',$conditionArray,$ignoreArray)){
+        $conditionArray = array('name_eng'=> $this->input->post('asset_eng'), 'temple_id' => $this->templeId, 'id !=' => $asset_id);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets', $conditionArray)){
             echo json_encode(['message' => 'error','viewMessage' => 'Asset Name(In English) already exist']);
             return;
         }
-        $conditionArray = array();
-        $conditionArray['name_alt'] = $this->input->post('asset_alt');
-        $conditionArray['temple_id'] = $this->templeId;
-        $ignoreArray = array();
-        $ignoreArray['id'] = $asset_id;
-        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets',$conditionArray,$ignoreArray)){
-            echo json_encode(['message' => 'error','viewMessage' => 'Asset Name(In Malayalam) already exist']);
+        $conditionArray = array('name_alt'=> $this->input->post('asset_alt'), 'temple_id' => $this->templeId, 'id !=' => $asset_id);
+        if(!$this->General_Model->checkDuplicateEntrywithArrayFilter('view_assets',$conditionArray)){
+            echo json_encode(['message' => 'error','viewMessage' => 'Asset Name(In Alternate) already exist']);
             return;
         }
-        $assetData['asset_category_id'] = $this->input->post('category');
-        $assetData['type'] = $this->input->post('type');
-        $assetData['unit'] = $this->input->post('unit');
-        $assetData['price'] = $this->input->post('price');
-        if($this->Stock_model->update_assets($asset_id,$assetData)){
-            if($this->Stock_model->delete_assets_lang($asset_id)){
-                $assetDataLang = array();
-                $assetDataLang['asset_master_id'] = $asset_id;
-                $assetDataLang['asset_name'] = $this->input->post('asset_eng');
-                $assetDataLang['description'] = $this->input->post('description_eng');
-                $assetDataLang['lang_id'] = 1;
-                $response = $this->Stock_model->insert_assets_detail($assetDataLang);
-                $assetDataLang = array();
-                $assetDataLang['asset_master_id'] = $asset_id;
-                $assetDataLang['asset_name'] = $this->input->post('asset_alt');
-                $assetDataLang['description'] = $this->input->post('description_alt');
-                $assetDataLang['lang_id'] = 2;
-                $response = $this->Stock_model->insert_assets_detail($assetDataLang);
-                if (!$response) {
-                    echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-                    return;
-                }
-                echo json_encode(['message' => 'success','viewMessage' => 'Successfully Updated', 'grid' => 'assets']);
-            }else{
-                echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-                return;
-            }
-        }else{
-            echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
-            return;
-        }
+        $assetData = array(
+            'asset_category_id' => $this->input->post('category'),
+            'type' => $this->input->post('type'),
+            'unit' => $this->input->post('unit'),
+            'price' => $this->input->post('price')
+        );
+        $assetDataLang = [];
+        $assetDataLang[] = array(
+            'asset_master_id' => $asset_id,
+            'asset_name' => $this->input->post('asset_eng'),
+            'description' => $this->input->post('description_eng'),
+            'lang_id' => 1
+        );
+        $assetDataLang[] = array(
+            'asset_master_id' => $asset_id,
+            'asset_name' => $this->input->post('asset_alt'),
+            'description' => $this->input->post('description_alt'),
+            'lang_id' => 2
+        );
+        if($this->Stock_model->update_assets($asset_id, $assetData, $assetDataLang))
+            echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'assets']);
+        else
+            echo json_encode(['message' => 'error','viewMessage' => 'Internal Error Occured']);
+        return;
     }
 
     function get_asset_drop_down_get(){

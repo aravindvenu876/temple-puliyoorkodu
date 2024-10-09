@@ -342,4 +342,16 @@ class Staff_model extends CI_Model {
         return $this->db->where('id',$id)->update('staff_weekly_off',$data);
     }
 
+    function user_edit($id){
+        $data = $this->db->where('id', $id)->get('users')->row_array();
+        if(!empty($data)){
+            $this->db->select('user_roles.id,user_roles.role');
+            $this->db->from('user_role_mapping');
+            $this->db->join('user_roles','user_roles.id = user_role_mapping.role_id');
+            $this->db->where('user_role_mapping.user_id',$id);
+            $data['roles'] = $this->db->get()->result();
+        }
+        return $data;
+    }
+
 }
