@@ -172,13 +172,13 @@
                                             <?php } ?>        
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!--<div class="row">
 										<div class="col-12" style="padding-top:15px">
 											<div class="counter dashboard-bg">
                                                 <?php echo '<h4 class="title">'.$this->lang->line('dashboard_today_collection').' ('.date('d-m-Y').') : <font style="font-size: 20px;color: #0050a1;"> ₹ '.number_format(($balance_to_deposit), 2, '.', '').'</font></h4>'; ?>
 											</div>
 										</div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>

@@ -31,10 +31,37 @@ class Login extends REST_Controller {
                     $this->responseData['data']['name'] = $user['name'];
                     $this->responseData['data']['server_date'] = date('d M Y');
                     $poojaList = $this->common_model->get_pooja($request->language,$request->temple_id);
-                    foreach($poojaList as $key => $row)
+                    foreach($poojaList as $key => $row){
                         $poojaList[$key]->pooja_name = trim(preg_replace('/\s\s+/', ' ', $row->pooja_name));
+                        if($row->prasadam_check == 1){
+                            $poojaList[$key]->prasadam = $this->common_model->get_pooja_prasadam_list($row->id,$request->language);
+                        }
+                    }
                     $this->responseData['data']['pooja'] = $poojaList;
+                    $advancePoojaList = $this->common_model->get_advance_pooja($request->language,$request->temple_id);
+                    foreach($advancePoojaList as $key => $row){
+                        $advancePoojaList[$key]->pooja_name = trim(preg_replace('/\s\s+/', ' ', $row->pooja_name));
+                        if($row->prasadam_check == 1){
+                            $advancePoojaList[$key]->prasadam = $this->common_model->get_pooja_prasadam_list($row->id,$request->language);
+                        }
+                    }
+                    $this->responseData['data']['advancePoojaList'] = $advancePoojaList;
+                    $special1 = $this->common_model->get_special_types1($request->language);
+                    $special2 = $this->common_model->get_special_types2($request->language);
+                    $special = array_merge($special1,$special2);
+                    $this->responseData['data']['special'] = $special;
+                    $this->responseData['data']['hall'] = $this->common_model->get_halls($request->language,$request->temple_id);
+                    foreach($this->responseData['data']['hall'] as $key => $val){
+                        $rent = $this->common_model->get_hall_full_day_rent($val->id,2);
+                        $this->responseData['data']['hall'][$key]->rent = $rent['rate'];
+                    }
+                    $this->responseData['data']['postal'] = $this->common_model->get_postal_rate();
+                    $this->responseData['data']['aavahanamPooja'] = $this->common_model->get_aavahanam_pooja($request->language,$request->temple_id);
+                    $this->responseData['data']['aavahanamOtherpooja'] = $this->common_model->get_otheraavahanam_pooja($request->language,$request->temple_id);
+                    $this->responseData['data']['aavahanamAdvance'] = AAVAHANAM_ADVANCE_RATE;
+                    $this->responseData['data']['mattuvarumanam'] = $this->common_model->get_mattuvarumanam_list($request->language,$request->temple_id);
                     $this->responseData['data']['donation_categories'] = $this->common_model->get_donation_categories($request->language,$request->temple_id);
+                    $this->responseData['data']['prasadam'] = $this->common_model->get_prasadam_list($request->language,$request->temple_id);
                     $this->responseData['data']['assets'] = $this->common_model->get_assets($request->language,$request->temple_id);
                 }else{
                     $this->responseData['status'] = FALSE;

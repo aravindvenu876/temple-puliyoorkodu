@@ -42,6 +42,7 @@ class Reports_data extends REST_Controller {
     function get_pooja_report_post(){
         $dataFilter['from_date'] = date('Y-m-d',strtotime($this->post('from_date')));
         $dataFilter['to_date'] = date('Y-m-d',strtotime($this->post('to_date')));
+		$dataFilter['counter'] = '';
         if($this->post('counter') != ""){
             $dataFilter['counter'] = $this->post('counter');
         }

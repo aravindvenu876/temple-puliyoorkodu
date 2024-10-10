@@ -131,7 +131,6 @@ class Pooja_data extends REST_Controller {
         );
         if($this->Pooja_model->update_pooja_data($poojaId, $poojaData, $poojaDataLang))
             echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'pooja']);
-            return;
         else
             echo json_encode(['message' => 'error','viewMessage' => 'Internal Error Occured']);
         return;
