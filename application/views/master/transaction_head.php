@@ -24,14 +24,8 @@
 														</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12"> <span class="span_label "><?php echo $this->lang->line('account_ledger'); ?><span class="asterisk">*</span></span>
-                                                    <div class="form-group accountselect">
-                                                        <select name="account_name1" id="account_name1" class="form-control parsley-validated" data-required="true"></select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row ">
-                                                <div class="col-md-12 col-sm-12 col-12 ">
+                                                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 ">
+                                                    <br>
                                                     <button class="btn btn-primary saveButton"><?php echo $this->lang->line('save'); ?></button> 
 													<a class="btn btn-default" id="cancelEdit"><?php echo $this->lang->line('cancel'); ?></a> 
 												</div>

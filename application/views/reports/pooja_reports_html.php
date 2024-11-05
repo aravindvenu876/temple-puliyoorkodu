@@ -23,7 +23,8 @@
                 <table style="float:left;width:100%;border:1px solid #dedede;border-spacing:0;;">
                     <tr>
                         <th style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Sl#</th>
-                        <th style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('date'); ?></th>
+                        <th style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo 'Receipt '.$this->lang->line('date'); ?></th>
+                        <th style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo 'Pooja '.$this->lang->line('date'); ?></th>
                         <th style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja'); ?></th>
                         <th style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('star'); ?></th>
                         <th style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja_type'); ?></th>
@@ -59,6 +60,7 @@
                         echo "<tr>";
                         echo "<td style='text-align:left;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$i</td>";
                         echo "<td style='text-align:left;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>".date('d-m-Y',strtotime($row->receipt_date))."</td>";
+                        echo "<td style='text-align:left;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>".date('d-m-Y',strtotime($row->date))."</td>";
                         echo "<td style='text-align:left;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->pooja</td>";
                         echo "<td style='text-align:left;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->star</td>";
                         echo "<td style='text-align:left;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->pooja_type</td>";
@@ -72,9 +74,9 @@
                     } 
                     ?>
                      <tr>
-                        <th colspan='6' style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right">Total Amount</th>
+                        <th colspan='7' style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right">Total Amount</th>
                         <th style="text-align:left;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right"><?php echo number_format((float)$total, 2, '.', ''); ?></th>
-                        <th colspan='7' style="text-align:left;padding:5px;border-bottom:1px solid #dedede;"></th>
+                        <th colspan='4' style="text-align:left;padding:5px;border-bottom:1px solid #dedede;"></th>
                     </tr>
                 </table>
             </div>

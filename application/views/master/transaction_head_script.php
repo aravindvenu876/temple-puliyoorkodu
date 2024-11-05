@@ -82,18 +82,6 @@
         $(".saveButton").text("<?php echo $this->lang->line('save'); ?>");
         $("form.add-edit").attr('action', "<?php echo base_url() ?>service/Transaction_head_data/transaction_heads_add");
         clear_form();
-        $.ajax({
-			url: '<?php echo base_url() ?>service/Account_basic_data/get_account_heads_drop_down',
-			type: 'GET',
-			async: false,
-			success: function(data) {
-				var string = '<option value="">Select Account Head</option>';
-				$.each(data.account_head, function(i, v) {
-					string += '<option value="' + v.id + '">' + v.head + '</option>';
-				});
-				$("#account_name1").html(string);
-			}
-		});
     });
 
 </script>

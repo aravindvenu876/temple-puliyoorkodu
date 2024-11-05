@@ -387,54 +387,54 @@ class Bank_data extends REST_Controller {
         if($transaction_id = $this->Bank_model->add_daily_transaction($dailyTransactionData, $bankTransactionData, $chequeManagementData)) {
             //Accounting Entry Start
             #Cash Ledger : 25
-            $transactionHead =  $this->db->where('id',$this->input->post('head'))->get('view_transaction_heads')->row_array();
-            $bank_cash_ledger_id = 25;
-            if($this->input->post('payment_mode') != "Cash"){
-                $bankHead = $this->db->where('id',$this->input->post('account'))->get('view_bank_accounts')->row_array();
-                $bank_cash_ledger_id = $bankHead['ledger_id'];
-            }
-            if($this->input->post('type') == "Income"){
-                $accountEntryMain 					= array();
-                $accountEntryMain['type'] 			= "Credit";
-                $accountEntryMain['voucher_type'] 	= "Sales";
-                $accountEntryMain['date'] 			= date('Y-m-d',strtotime($this->input->post('date')));
-                $accountEntryMain['voucher_no'] 	= $transaction_id;
-                $accountEntryMain['amount'] 		= $this->input->post('amount');
-                $accountEntryMain['description']	= $transactionHead['head_eng'].' income on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
-                $accountEntryMain['entry_type']	    = 'Daily Transaction';
-                $accountEntryMain['entry_ref_id']	= $transaction_id;
-                $accountEntryMain['sub_type1']		= $bank_cash_ledger_id;
-                $accountEntryMain['sub_sec1']		= 'By';
-                $accountEntryMain['debit_amount1']	= $this->input->post('amount');
-                $accountEntryMain['credit_amount1']	= 0;
-                $accountEntryMain['narration1']     = $transactionHead['head_eng'].' income on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
-                $accountEntryMain['sub_type2']		= $transactionHead['ledger_id'];
-                $accountEntryMain['sub_sec2']		= 'To';
-                $accountEntryMain['debit_amount2']	= 0;
-                $accountEntryMain['credit_amount2']	= $this->input->post('amount');
-                $accountEntryMain['narration2']     = $transactionHead['head_eng'].' income on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
-            }else{
-                $accountEntryMain 					= array();
-                $accountEntryMain['type'] 			= "Debit";
-                $accountEntryMain['voucher_type'] 	= "Payment";
-                $accountEntryMain['date'] 			= date('Y-m-d',strtotime($this->input->post('date')));
-                $accountEntryMain['voucher_no'] 	= $transaction_id;
-                $accountEntryMain['amount'] 		= $this->input->post('amount');
-                $accountEntryMain['description']	= $transactionHead['head_eng'].' expense on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
-                $accountEntryMain['entry_type']	    = 'Daily Transaction';
-                $accountEntryMain['entry_ref_id']	= $transaction_id;
-                $accountEntryMain['sub_type1']		= $bank_cash_ledger_id;
-                $accountEntryMain['sub_sec1']		= 'To';
-                $accountEntryMain['debit_amount1']	= 0;
-                $accountEntryMain['credit_amount1']	= $this->input->post('amount');
-                $accountEntryMain['narration1']     = $transactionHead['head_eng'].' expense on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
-                $accountEntryMain['sub_type2']		= $transactionHead['ledger_id'];
-                $accountEntryMain['sub_sec2']		= 'By';
-                $accountEntryMain['debit_amount2']	= $this->input->post('amount');
-                $accountEntryMain['credit_amount2']	= 0;
-                $accountEntryMain['narration2']     = $transactionHead['head_eng'].' expense on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
-            }
-            $this->accounting_entries->accountingEntryNewSet($accountEntryMain);
+            // $transactionHead =  $this->db->where('id',$this->input->post('head'))->get('view_transaction_heads')->row_array();
+            // $bank_cash_ledger_id = 25;
+            // if($this->input->post('payment_mode') != "Cash"){
+            //     $bankHead = $this->db->where('id',$this->input->post('account'))->get('view_bank_accounts')->row_array();
+            //     $bank_cash_ledger_id = $bankHead['ledger_id'];
+            // }
+            // if($this->input->post('type') == "Income"){
+            //     $accountEntryMain 					= array();
+            //     $accountEntryMain['type'] 			= "Credit";
+            //     $accountEntryMain['voucher_type'] 	= "Sales";
+            //     $accountEntryMain['date'] 			= date('Y-m-d',strtotime($this->input->post('date')));
+            //     $accountEntryMain['voucher_no'] 	= $transaction_id;
+            //     $accountEntryMain['amount'] 		= $this->input->post('amount');
+            //     $accountEntryMain['description']	= $transactionHead['head_eng'].' income on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
+            //     $accountEntryMain['entry_type']	    = 'Daily Transaction';
+            //     $accountEntryMain['entry_ref_id']	= $transaction_id;
+            //     $accountEntryMain['sub_type1']		= $bank_cash_ledger_id;
+            //     $accountEntryMain['sub_sec1']		= 'By';
+            //     $accountEntryMain['debit_amount1']	= $this->input->post('amount');
+            //     $accountEntryMain['credit_amount1']	= 0;
+            //     $accountEntryMain['narration1']     = $transactionHead['head_eng'].' income on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
+            //     $accountEntryMain['sub_type2']		= $transactionHead['ledger_id'];
+            //     $accountEntryMain['sub_sec2']		= 'To';
+            //     $accountEntryMain['debit_amount2']	= 0;
+            //     $accountEntryMain['credit_amount2']	= $this->input->post('amount');
+            //     $accountEntryMain['narration2']     = $transactionHead['head_eng'].' income on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
+            // }else{
+            //     $accountEntryMain 					= array();
+            //     $accountEntryMain['type'] 			= "Debit";
+            //     $accountEntryMain['voucher_type'] 	= "Payment";
+            //     $accountEntryMain['date'] 			= date('Y-m-d',strtotime($this->input->post('date')));
+            //     $accountEntryMain['voucher_no'] 	= $transaction_id;
+            //     $accountEntryMain['amount'] 		= $this->input->post('amount');
+            //     $accountEntryMain['description']	= $transactionHead['head_eng'].' expense on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
+            //     $accountEntryMain['entry_type']	    = 'Daily Transaction';
+            //     $accountEntryMain['entry_ref_id']	= $transaction_id;
+            //     $accountEntryMain['sub_type1']		= $bank_cash_ledger_id;
+            //     $accountEntryMain['sub_sec1']		= 'To';
+            //     $accountEntryMain['debit_amount1']	= 0;
+            //     $accountEntryMain['credit_amount1']	= $this->input->post('amount');
+            //     $accountEntryMain['narration1']     = $transactionHead['head_eng'].' expense on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
+            //     $accountEntryMain['sub_type2']		= $transactionHead['ledger_id'];
+            //     $accountEntryMain['sub_sec2']		= 'By';
+            //     $accountEntryMain['debit_amount2']	= $this->input->post('amount');
+            //     $accountEntryMain['credit_amount2']	= 0;
+            //     $accountEntryMain['narration2']     = $transactionHead['head_eng'].' expense on '.date('d-m-Y',strtotime($this->input->post('date'))).' '.$this->input->post('description');
+            // }
+            // $this->accounting_entries->accountingEntryNewSet($accountEntryMain);
             //Accounting Entry End
             echo json_encode(['message' => 'success','viewMessage' => 'Successfully Added', 'grid' => 'daily_transactions']);
             return;

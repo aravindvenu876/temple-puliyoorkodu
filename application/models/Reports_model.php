@@ -11,33 +11,28 @@ class Reports_model extends CI_Model {
 
     function get_pooja_report($filterData){
         if($filterData['counter'] != 'Web' ){
-            $this->db->select(
-                'receipt.receipt_date,receipt_details.name,receipt_details.phone,receipt_details.pooja,
-                receipt_details.star,receipt.receipt_no,pooja_master_lang.pooja_name as pooja,
-                receipt_details.amount,receipt.pooja_type,users.name as user_name,receipt.pos_counter_id,
-                pooja_master_lang.lang_id'
-            );
-            $this->db->from('receipt_details');
-            $this->db->join('receipt','receipt.id=receipt_details.receipt_id');
-            $this->db->join('counter_sessions','counter_sessions.id=receipt.session_id');
-            $this->db->join('users','users.id=receipt.user_id');
-            $this->db->join('pooja_master_lang','pooja_master_lang.pooja_master_id=receipt_details.pooja_master_id');
-            $this->db->where('receipt.receipt_type','Pooja');
-            $this->db->where('receipt.receipt_status','ACTIVE');
+            $this->db->select('opt_counter_receipt.receipt_date, opt_counter_receipt_details.name, opt_counter_receipt_details.phone,
+                opt_counter_receipt_details.pooja, opt_counter_receipt_details.star, opt_counter_receipt.receipt_no,
+                pooja_master_lang.pooja_name as pooja, opt_counter_receipt_details.amount, opt_counter_receipt.pooja_type,
+                users.name as user_name, opt_counter_receipt.pos_counter_id, pooja_master_lang.lang_id, opt_counter_receipt_details.date');
+            $this->db->from('opt_counter_receipt_details');
+            $this->db->join('opt_counter_receipt','opt_counter_receipt.id=opt_counter_receipt_details.receipt_id');
+            $this->db->join('counter_sessions','counter_sessions.id=opt_counter_receipt.session_id');
+            $this->db->join('users','users.id=opt_counter_receipt.user_id');
+            $this->db->join('pooja_master_lang','pooja_master_lang.pooja_master_id=opt_counter_receipt_details.pooja_master_id');
+            $this->db->where('opt_counter_receipt.receipt_type','Pooja');
+            $this->db->where('opt_counter_receipt.receipt_status','ACTIVE');
             $this->db->where('pooja_master_lang.lang_id',$filterData['language']);
-            $this->db->where('receipt.receipt_date >=',$filterData['from_date']);
-            $this->db->where('receipt.receipt_date <=',$filterData['to_date']);
-            $this->db->where('receipt.temple_id',$filterData['temple_id']);
-            $this->db->order_by("receipt_no", "asc");
-            if(isset($filterData['counter'])){
+            $this->db->where('opt_counter_receipt_details.date >=',$filterData['from_date']);
+            $this->db->where('opt_counter_receipt_details.date <=',$filterData['to_date']);
+            $this->db->where('opt_counter_receipt.temple_id',$filterData['temple_id']);
+            $this->db->order_by("opt_counter_receipt.receipt_no", "asc");
+            if($filterData['counter'] != '')
                 $this->db->where('counter_sessions.counter_id',$filterData['counter']);
-            }
-            if(isset($filterData['user'])){
-                $this->db->where('receipt.user_id',$filterData['user']);
-            }
-            if(isset($filterData['pooja'])){
-                $this->db->where('receipt_details.pooja_master_id',$filterData['pooja']);
-            }
+            if($filterData['user'] != '')
+                $this->db->where('opt_counter_receipt.user_id',$filterData['user']);
+            if($filterData['pooja'] != '')
+                $this->db->where('opt_counter_receipt.pooja_master_id',$filterData['pooja']);
             return $this->db->get()->result();
 		}else{
 			$this->db->select('
@@ -61,8 +56,8 @@ class Reports_model extends CI_Model {
 			$this->db->where('web_receipt_main.receipt_status','ACTIVE');
 			$this->db->where('web_receipt_main.web_status','CONFIRMED');
 			$this->db->where('pooja_master_lang.lang_id',$filterData['language']);
-			$this->db->where('web_receipt_main.receipt_date >=',$filterData['from_date']);
-			$this->db->where('web_receipt_main.receipt_date <=',$filterData['to_date']);
+            $this->db->where('web_receipt_details.date >=',$filterData['from_date']);
+            $this->db->where('web_receipt_details.date <=',$filterData['to_date']);
 			$this->db->where('web_receipt_main.temple_id',$filterData['temple_id']);
 			$this->db->order_by("receipt_no", "asc");
 			if(isset($filterData['pooja'])){

@@ -95,7 +95,8 @@
                         j++;
                         reportData += "<tr>";
                         reportData += "<td>"+j+"</td>";
-                        reportData += "<td>"+convert_date(v.receipt_date)+"</td>";                   
+                        reportData += "<td>"+convert_date(v.receipt_date)+"</td>";
+                        reportData += "<td>"+convert_date(v.date)+"</td>";
                         reportData += "<td>"+v.pooja+"</td>";
                         reportData += "<td>"+v.star+"</td>";
                         reportData += "<td>"+v.pooja_type+"</td>";
@@ -114,9 +115,9 @@
                     });  
                     var total_rate= parseFloat(total,10).toFixed(2); 
                     reportData += "<tr>";
-                    reportData += "<th colspan='6' style='text-align:right'><?php echo $this->lang->line('total_amount'); ?></th>";
+                    reportData += "<th colspan='7' style='text-align:right'><?php echo $this->lang->line('total_amount'); ?></th>";
                     reportData += "<th style='text-align:right'>"+total_rate+"</th>";
-                    reportData += "<th colspan='7'></th></tr>";
+                    reportData += "<th colspan='4'></th></tr>";
                 }
                 $("#report_body").html(reportData);
             }

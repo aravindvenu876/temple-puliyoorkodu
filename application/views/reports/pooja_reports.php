@@ -44,7 +44,7 @@
                                                 <button class="btn btn-primary btn_print_html"><?php echo $this->lang->line('print'); ?></button>
                                                 <!-- <a style='cursor: pointer;' data-toggle='tooltip' class='pdf_payslip btn btn-warning' data-placement='right' data-original-title = 'PDF Payslip'>
                                                 <i class='fa fa-file-pdf-o' aria-hidden='true'></i></a> -->
-                                                <button class="pdf_payslip btn btn-primary">PDF</button> 
+                                                <!-- <button class="pdf_payslip btn btn-primary">PDF</button>  -->
                                                 <!-- <button class="btn btn-warning"><i class="fa fa-file-excel-o"></i></button> -->
                                                 <button class="btn btn-default btn_clear"><?php echo $this->lang->line('clear'); ?></button>
                                             </div>
@@ -54,7 +54,8 @@
                                                 <thead>
                                                     <tr class="bg-warning text-white text-center">
                                                         <th><?php echo $this->lang->line('sl'); ?></th>
-                                                        <th><?php echo $this->lang->line('date'); ?></th>
+                                                        <th>Receipt Date</th>
+                                                        <th>Pooja Date</th>
                                                         <th><?php echo $this->lang->line('pooja'); ?></th>
                                                         <th><?php echo $this->lang->line('star'); ?></th>
                                                         <th><?php echo $this->lang->line('pooja_type'); ?></th>

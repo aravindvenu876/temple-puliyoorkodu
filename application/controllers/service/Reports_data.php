@@ -42,16 +42,9 @@ class Reports_data extends REST_Controller {
     function get_pooja_report_post(){
         $dataFilter['from_date'] = date('Y-m-d',strtotime($this->post('from_date')));
         $dataFilter['to_date'] = date('Y-m-d',strtotime($this->post('to_date')));
-		$dataFilter['counter'] = '';
-        if($this->post('counter') != ""){
-            $dataFilter['counter'] = $this->post('counter');
-        }
-        if($this->post('user') != ""){
-            $dataFilter['user'] = $this->post('user');
-        }
-        if($this->post('pooja') != ""){
-            $dataFilter['pooja'] = $this->post('pooja');
-        }
+        $dataFilter['counter'] = $this->post('counter');
+        $dataFilter['user'] = $this->post('user');
+        $dataFilter['pooja'] = $this->post('pooja');
         $dataFilter['language'] = $this->languageId;
         $dataFilter['temple_id']=$this->templeId;
         $data['report'] = $this->Reports_model->get_pooja_report($dataFilter);
@@ -61,15 +54,9 @@ class Reports_data extends REST_Controller {
     function get_pooja_report_print_post(){
         $dataFilter['from_date'] = date('Y-m-d',strtotime($this->post('from_date')));
         $dataFilter['to_date'] = date('Y-m-d',strtotime($this->post('to_date')));
-        if($this->post('counter') != ""){
-            $dataFilter['counter'] = $this->post('counter');
-        }
-        if($this->post('user') != ""){
-            $dataFilter['user'] = $this->post('user');
-        }
-        if($this->post('pooja') != ""){
-            $dataFilter['pooja'] = $this->post('pooja');
-        }
+		$dataFilter['counter'] = $this->post('counter');
+		$dataFilter['user'] = $this->post('user');
+		$dataFilter['pooja'] = $this->post('pooja');
         $dataFilter['language'] = $this->languageId;
         $dataFilter['temple_id']=$this->templeId;
         $data['report'] = $this->Reports_model->get_pooja_report($dataFilter);

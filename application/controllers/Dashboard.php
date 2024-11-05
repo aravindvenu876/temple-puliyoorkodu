@@ -27,11 +27,11 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
-        //$this->data['fd_renewals'] = $this->General_Model->get_fixed_deposit_renewals($this->templeId,$this->languageId);
-        //$this->data['data_list']=$this->Dashboard_model->counter_data($this->templeId);
-        //$this->data['pooja_list']=$this->Dashboard_model->pooja_data($this->templeId);
-		//$this->data['leave_list']=$this->Dashboard_model->leave_data();
-		//$this->data['balance_to_deposit'] = $this->Dashboard_model->get_balance_to_be_deposited($this->templeId);
+        $this->data['fd_renewals'] = $this->General_Model->get_fixed_deposit_renewals($this->templeId,$this->languageId);
+        $this->data['data_list']=$this->Dashboard_model->counter_data($this->templeId);
+        $this->data['pooja_list']=$this->Dashboard_model->pooja_data($this->templeId);
+		$this->data['leave_list']=$this->Dashboard_model->leave_data();
+		$this->data['balance_to_deposit'] = $this->Dashboard_model->get_balance_to_be_deposited($this->templeId);
         $this->load->view('dashboard/dashboard',$this->data);
     }
 

@@ -36,7 +36,6 @@ class Transaction_head_data extends REST_Controller {
     function transaction_heads_add_post(){
         $transactionHeadData['status'] = 1;
         $transactionHeadData['type'] = $this->input->post('type');
-        $accountHead    = $this->input->post('account_name1');
         if(!$this->General_Model->checkDuplicateEntry('view_transaction_heads','head_eng',$this->input->post('name_eng'))){
             echo json_encode(['message' => 'error','viewMessage' => 'Expense Type(In English) already exist']);
             return;
@@ -45,7 +44,7 @@ class Transaction_head_data extends REST_Controller {
             echo json_encode(['message' => 'error','viewMessage' => 'Expense Type(In Alternate) already exist']);
             return;
         }
-        $transaction_head_id = $this->Transaction_model->insert_transaction_head($transactionHeadData,$accountHead);
+        $transaction_head_id = $this->Transaction_model->insert_transaction_head($transactionHeadData);
         if (!$transaction_head_id) {
             echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
             return;
@@ -90,8 +89,7 @@ class Transaction_head_data extends REST_Controller {
         if($this->Transaction_model->delete_transaction_head_lang($transaction_head_id)){
 			$transactionHeadData = array();
 			$transactionHeadData['type'] = $this->input->post('type');
-            $accountHead    = $this->input->post('account_name1');
-			$response = $this->Transaction_model->update_transaction_head($transaction_head_id,$transactionHeadData,$accountHead);
+			$response = $this->Transaction_model->update_transaction_head($transaction_head_id,$transactionHeadData);
             $transactionHeadDataLang = array();
             $transactionHeadDataLang['transactions_head_id'] = $transaction_head_id;
             $transactionHeadDataLang['head'] = $this->input->post('name_eng');
