@@ -11,9 +11,9 @@ class ReceiptBook_model extends CI_Model {
         //* Array of database columns which should be read and sent back to DataTables. Use a space where
 		//* you want to insert a non-database field (for example a counter or static image)
 		if($language == 1){
-			$aColumns = array('id', 'id', 'book_eng', 'ledger_name', 'page', 'rate_type', 'rate', 'book_type', 'status');
+			$aColumns = array('id', 'id', 'book_eng', 'book_eng', 'page', 'rate_type', 'rate', 'book_type', 'status');
 		}else{
-			$aColumns = array('id', 'id', 'book_alt', 'ledger_name', 'page', 'rate_type', 'rate', 'book_type', 'status');
+			$aColumns = array('id', 'id', 'book_alt', 'book_alt', 'page', 'rate_type', 'rate', 'book_type', 'status');
 		}
 
         // Paging
@@ -82,12 +82,12 @@ class ReceiptBook_model extends CI_Model {
 		$this->db->trans_strict();
         $this->db->insert('pos_receipt_book', $data);
         $last_id = $this->db->insert_id();
-        $head_mapping = array(
-            'accounting_head_id'=> $ledgerId,
-            'table_id'          => 13,
-            'mapped_head_id'    => $last_id
-        );
-        $this->db->insert('accounting_head_mapping',$head_mapping);
+        // $head_mapping = array(
+        //     'accounting_head_id'=> $ledgerId,
+        //     'table_id'          => 13,
+        //     'mapped_head_id'    => $last_id
+        // );
+        // $this->db->insert('accounting_head_mapping',$head_mapping);
 		$this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
 			$this->db->trans_rollback();
@@ -114,25 +114,25 @@ class ReceiptBook_model extends CI_Model {
         $this->db->trans_start();
 		$this->db->trans_strict();
         $this->db->where('id',$id)->update('pos_receipt_book', $data);
-        $headMapping = array(
-            'accounting_head_id'=> $ledgerId,
-            'table_id'          => 13,
-            'mapped_head_id'    => $id
-        );
+        // $headMapping = array(
+        //     'accounting_head_id'=> $ledgerId,
+        //     'table_id'          => 13,
+        //     'mapped_head_id'    => $id
+        // );
 
-        $headMappingSearch = array('table_id' => 13, 'mapped_head_id' => $id, 'status' => 1);
+        // $headMappingSearch = array('table_id' => 13, 'mapped_head_id' => $id, 'status' => 1);
 
-        $accountingHeadMapping = $this->db->select('*')->where($headMappingSearch)->get('accounting_head_mapping')->row_array();
-        // echo "<pre>"; print_r($accountingHeadMapping); exit;
-        if(!empty($accountingHeadMapping)){
-            if($accountingHeadMapping['accounting_head_id'] != $ledgerId){
-                $status = array('status' => 0);
-                $this->db->where('id',$accountingHeadMapping['id'])->update('accounting_head_mapping', $status);
-                $this->db->insert('accounting_head_mapping', $headMapping);
-            }
-        } else {
-            $this->db->insert('accounting_head_mapping', $headMapping);
-        }
+        // $accountingHeadMapping = $this->db->select('*')->where($headMappingSearch)->get('accounting_head_mapping')->row_array();
+        // // echo "<pre>"; print_r($accountingHeadMapping); exit;
+        // if(!empty($accountingHeadMapping)){
+        //     if($accountingHeadMapping['accounting_head_id'] != $ledgerId){
+        //         $status = array('status' => 0);
+        //         $this->db->where('id',$accountingHeadMapping['id'])->update('accounting_head_mapping', $status);
+        //         $this->db->insert('accounting_head_mapping', $headMapping);
+        //     }
+        // } else {
+        //     $this->db->insert('accounting_head_mapping', $headMapping);
+        // }
         $this->db->trans_complete(); 
 		if ($this->db->trans_status() === FALSE) {
 			$this->db->trans_rollback();
@@ -343,8 +343,14 @@ class ReceiptBook_model extends CI_Model {
         return $output;
     }
 
-    function get_usedreceiptbook_list($book,$temple_id){
-        return $this->db->select('*')->where('temple_id',$temple_id)->where('status',1)->get('pos_receipt_book_items')->result();
+    function get_usedreceiptbook_list($language_id, $temple_id){
+        $this->db->select('pos_receipt_book_items.*, pos_receipt_book_lang.book');
+        $this->db->from('pos_receipt_book_items');
+        $this->db->join('pos_receipt_book_lang', 'pos_receipt_book_lang.book_id = pos_receipt_book_items.book_id');
+        $this->db->where('pos_receipt_book_items.temple_id', $temple_id);
+        $this->db->where('pos_receipt_book_lang.lang_id', $language_id);
+        $this->db->where('pos_receipt_book_items.status', 1);
+        return $this->db->get()->result();
     }
 
     function insert_receiptbook_data($data){

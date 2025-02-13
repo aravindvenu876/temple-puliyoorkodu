@@ -16,14 +16,14 @@ class Receipt_book_data extends REST_Controller {
     }
 
     function book_details_get() {
-        $filterList     = array();
-        $iDisplayStart  = $this->input->get_post('iDisplayStart', TRUE);
+        $filterList = array();
+        $iDisplayStart = $this->input->get_post('iDisplayStart', TRUE);
         $iDisplayLength = $this->input->get_post('iDisplayLength', TRUE);
-        $iSortCol_0     = $this->input->get_post('iSortCol_0', TRUE);
-        $iSortingCols   = $this->input->get_post('iSortingCols', TRUE);
-        $sSearch        = $this->input->get_post('sSearch', TRUE);
-        $sEcho          = $this->input->get_post('sEcho', TRUE);
-        $sSearch        = trim($sSearch);
+        $iSortCol_0 = $this->input->get_post('iSortCol_0', TRUE);
+        $iSortingCols = $this->input->get_post('iSortingCols', TRUE);
+        $sSearch = $this->input->get_post('sSearch', TRUE);
+        $sEcho = $this->input->get_post('sEcho', TRUE);
+        $sSearch = trim($sSearch);
         $all = $this->ReceiptBook_model->get_all_book_categories($filterList,$this->templeId,$this->languageId,$iDisplayStart, $iDisplayLength, $iSortCol_0, $iSortingCols, $sSearch, $sEcho);
         if ($all) {
             $this->response($all, 200);
@@ -36,13 +36,8 @@ class Receipt_book_data extends REST_Controller {
         $ReceiptBookData['page'] = $this->input->post('page');
         $ReceiptBookData['rate'] = $this->input->post('rate');
         $ReceiptBookData['rate_type'] = $this->input->post('rate_type');
-		$ReceiptBookData['book_type'] = $this->input->post('book_type');
-        $accountHead    = $this->input->post('account_name1');
-		if($this->input->post('rate_type') == 'Fixed Amount'){
-			if($this->input->post('book_type') == "Pooja" || $this->input->post('book_type') == "Prasadam"){
-				$ReceiptBookData['item'] = $this->input->post('item');
-			}
-		}
+		if($this->input->post('rate_type') == 'Fixed Amount')
+			$ReceiptBookData['item'] = $this->input->post('item');
         $ReceiptBookData['temple_id'] = $this->session->userdata('temple');
         if(!$this->General_Model->checkDuplicateEntry('view_pos_receipt_books','book_eng',$this->input->post('book_eng'))){
             echo json_encode(['message' => 'error','viewMessage' => 'Receipt Book(In English) already exist']);
@@ -52,7 +47,7 @@ class Receipt_book_data extends REST_Controller {
             echo json_encode(['message' => 'error','viewMessage' => 'Receipt Book(In Alternate) already exist']);
             return;
         }
-        $ReceiptBookData_id = $this->ReceiptBook_model->insert_receiptbook($ReceiptBookData,$accountHead);
+        $ReceiptBookData_id = $this->ReceiptBook_model->insert_receiptbook($ReceiptBookData, []);
         if (!$ReceiptBookData_id) {
             echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
             return;
@@ -77,21 +72,14 @@ class Receipt_book_data extends REST_Controller {
     function receiptbook_edit_get(){
         $book_id = $this->get('id');
         $data['editData'] = $this->ReceiptBook_model->get_receiptbook_edit($book_id);
-        if($data['editData']['book_type'] == "Pooja"){
+        $data['editData']['item_name'] = '';
+        if($data['editData']['item'] > 0){
             $this->load->model('Pooja_model');
             $itemData = $this->Pooja_model->get_pooja_edit($data['editData']['item']);
             if($this->languageId == 1){
                 $data['editData']['item_name'] = $itemData['pooja_name_eng'];
             }else{
                 $data['editData']['item_name'] = $itemData['pooja_name_alt'];
-            }
-        } else if($data['editData']['book_type'] == "Prasadam"){
-            $this->load->model('Item_model');
-            $itemData = $this->Item_model->get_item_edit($data['editData']['item']);
-            if($this->languageId == 1){
-                $data['editData']['item_name'] = $itemData['item_eng'];
-            }else{
-                $data['editData']['item_name'] = $itemData['item_alt'];
             }
         }
         if (!$data) {
@@ -111,18 +99,16 @@ class Receipt_book_data extends REST_Controller {
 			return;
 		}
 		$bookExistData = $this->ReceiptBook_model->get_receiptbook_edit($this->input->post('selected_id'));
-		if($bookExistData['book_type'] != $this->input->post('book_type') || $bookExistData['rate_type'] != $this->input->post('rate_type')){
-			echo json_encode(['message' => 'error','viewMessage' => 'Book type or rate type cannot change']);
+		if($bookExistData['rate_type'] != $this->input->post('rate_type')){
+			echo json_encode(['message' => 'error','viewMessage' => 'Rate type cannot change']);
 			return;
 		}
 		$ReceiptBook['page'] = $this->input->post('page');
         $ReceiptBook['rate'] = $this->input->post('rate');
         $ReceiptBook['rate_type'] = $this->input->post('rate_type');
-        $ReceiptBook['book_type'] = $this->input->post('book_type');
         $ReceiptBook['item'] = $this->input->post('item');
-        $accountHead    = $this->input->post('account_name1');
         $receiptbook_id = $this->input->post('selected_id');
-        if($this->ReceiptBook_model->update_ReceiptBook($receiptbook_id,$ReceiptBook,$accountHead)){
+        if($this->ReceiptBook_model->update_ReceiptBook($receiptbook_id, $ReceiptBook, [])){
             if($this->ReceiptBook_model->delete_ReceiptBook_lang($receiptbook_id)){
                 $ReceiptBookLang = array();
                 $ReceiptBookLang['book_id'] = $receiptbook_id;
@@ -430,7 +416,7 @@ class Receipt_book_data extends REST_Controller {
     }
 
     function get_usedreceiptbook_drop_down_get(){
-        $data['id'] = $this->ReceiptBook_model->get_usedreceiptbook_list($this->languageId,$this->templeId);
+        $data['id'] = $this->ReceiptBook_model->get_usedreceiptbook_list($this->languageId, $this->templeId);
         if (!$data) {
             echo json_encode(['message' => 'error','viewMessage' => 'Error Occured']);
             return;

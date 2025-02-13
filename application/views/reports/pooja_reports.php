@@ -19,7 +19,7 @@
                                                     <input type="text" name="to_date" id="to_date" class="form-control" value="<?php echo date('d-m-Y') ?>"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 col-sm-6 col-12">
+                                            <!-- <div class="col-md-3 col-sm-6 col-12">
                                                 <span class="span_label"><?php echo $this->lang->line('user'); ?></span>
                                                 <div class="form-group">
                                                     <select name="user" id="user" class="form-control"></select>
@@ -36,10 +36,11 @@
                                                 <div class="form-group">
                                                     <select name="pooja" id="pooja" class="form-control"></select>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12 col-sm-12 col-12 ">
+                                            </div> -->
+                                        <!-- </div>
+                                        <div class="row"> -->
+                                            <div class="col-md-8 col-sm-12 col-12 " style="text-align:right">
+                                                <br>
                                                 <button id="btn_submit" class="btn btn-primary saveButton"><?php echo $this->lang->line('filter'); ?></button>
                                                 <button class="btn btn-primary btn_print_html"><?php echo $this->lang->line('print'); ?></button>
                                                 <!-- <a style='cursor: pointer;' data-toggle='tooltip' class='pdf_payslip btn btn-warning' data-placement='right' data-original-title = 'PDF Payslip'>
@@ -53,18 +54,11 @@
                                             <table class="table table-bordered scrolling table-striped table-sm">
                                                 <thead>
                                                     <tr class="bg-warning text-white text-center">
-                                                        <th><?php echo $this->lang->line('sl'); ?></th>
-                                                        <th>Receipt Date</th>
-                                                        <th>Pooja Date</th>
-                                                        <th><?php echo $this->lang->line('pooja'); ?></th>
-                                                        <th><?php echo $this->lang->line('star'); ?></th>
-                                                        <th><?php echo $this->lang->line('pooja_type'); ?></th>
-                                                        <th><?php echo $this->lang->line('receipt_no'); ?></th>
-                                                        <th><?php echo $this->lang->line('amount(₹)'); ?></th>
-                                                        <th><?php echo $this->lang->line('name'); ?></th>
-                                                        <th><?php echo $this->lang->line('phone'); ?></th>
-                                                        <th><?php echo $this->lang->line('user'); ?></th>
-                                                        <th><?php echo $this->lang->line('counter'); ?></th>
+                                                        <th style="text-align:left;"><?php echo $this->lang->line('sl'); ?></th>
+                                                        <th style="text-align:left;"><?php echo $this->lang->line('pooja'); ?></th>
+                                                        <th style="text-align:right;"><?php echo $this->lang->line('pooja_rpt_rate'); ?></th>
+                                                        <th style="text-align:right;"><?php echo $this->lang->line('pooja_rpt_count'); ?></th>
+                                                        <th style="text-align:right;"><?php echo $this->lang->line('pooja_rpt_amount'); ?></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="report_body"></tbody>

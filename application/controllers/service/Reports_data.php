@@ -40,49 +40,65 @@ class Reports_data extends REST_Controller {
     }
 
     function get_pooja_report_post(){
+        // $dataFilter['from_date'] = date('Y-m-d',strtotime($this->post('from_date')));
+        // $dataFilter['to_date'] = date('Y-m-d',strtotime($this->post('to_date')));
+        // $dataFilter['counter'] = $this->post('counter');
+        // $dataFilter['user'] = $this->post('user');
+        // $dataFilter['pooja'] = $this->post('pooja');
+        // $dataFilter['language'] = $this->languageId;
+        // $dataFilter['temple_id']=$this->templeId;
+        // $data['report'] = $this->Reports_model->get_pooja_report($dataFilter);
+        // $this->response($data);
         $dataFilter['from_date'] = date('Y-m-d',strtotime($this->post('from_date')));
         $dataFilter['to_date'] = date('Y-m-d',strtotime($this->post('to_date')));
-        $dataFilter['counter'] = $this->post('counter');
-        $dataFilter['user'] = $this->post('user');
-        $dataFilter['pooja'] = $this->post('pooja');
         $dataFilter['language'] = $this->languageId;
         $dataFilter['temple_id']=$this->templeId;
         $data['report'] = $this->Reports_model->get_pooja_report($dataFilter);
-        $this->response($data);           
+        $this->response($data);
     }
 
     function get_pooja_report_print_post(){
+        // $dataFilter['from_date'] = date('Y-m-d',strtotime($this->post('from_date')));
+        // $dataFilter['to_date'] = date('Y-m-d',strtotime($this->post('to_date')));
+		// $dataFilter['counter'] = $this->post('counter');
+		// $dataFilter['user'] = $this->post('user');
+		// $dataFilter['pooja'] = $this->post('pooja');
+        // $dataFilter['language'] = $this->languageId;
+        // $dataFilter['temple_id']=$this->templeId;
+        // $data['report'] = $this->Reports_model->get_pooja_report($dataFilter);
+        // $data['temple'] = $this->General_Model->get_temple_information($this->templeId,$this->languageId)['temple'];
+        // $data['from_date'] = $this->post('from_date');
+        // $data['to_date'] = $this->post('to_date');
+        // if($this->post('counter') == ""){
+        //     $data['counter'] = "All Counters";
+        // }else{
+        //     $counters = $this->General_Model->get_counter_information($this->post('counter'));
+        //     if(empty($counters)){
+        //         $data['counter'] = "";
+        //     }else{
+        //         $data['counter'] = $counters['counter_no'];
+        //     }
+        // }
+        // if($this->post('user') == ""){
+        //     $data['user'] = "All users";
+        // }else{
+        //     $user = $this->General_Model->get_user_information($this->post('user'));
+        //     if(empty($user)){
+        //         $data['user'] = "";
+        //     }else{
+        //         $data['user'] = $user['name'];
+        //     }
+        // }
+        // $pageData['page'] = $this->load->view("reports/pooja_reports_html", $data, TRUE);
+        // $this->response($pageData);
         $dataFilter['from_date'] = date('Y-m-d',strtotime($this->post('from_date')));
         $dataFilter['to_date'] = date('Y-m-d',strtotime($this->post('to_date')));
-		$dataFilter['counter'] = $this->post('counter');
-		$dataFilter['user'] = $this->post('user');
-		$dataFilter['pooja'] = $this->post('pooja');
         $dataFilter['language'] = $this->languageId;
         $dataFilter['temple_id']=$this->templeId;
-        $data['report'] = $this->Reports_model->get_pooja_report($dataFilter);
         $data['temple'] = $this->General_Model->get_temple_information($this->templeId,$this->languageId)['temple'];
         $data['from_date'] = $this->post('from_date');
         $data['to_date'] = $this->post('to_date');
-        if($this->post('counter') == ""){
-            $data['counter'] = "All Counters";
-        }else{
-            $counters = $this->General_Model->get_counter_information($this->post('counter'));
-            if(empty($counters)){
-                $data['counter'] = "";
-            }else{
-                $data['counter'] = $counters['counter_no'];
-            }
-        }
-        if($this->post('user') == ""){
-            $data['user'] = "All users";
-        }else{
-            $user = $this->General_Model->get_user_information($this->post('user'));
-            if(empty($user)){
-                $data['user'] = "";
-            }else{
-                $data['user'] = $user['name'];
-            }
-        }
+        $data['report'] = $this->Reports_model->get_pooja_report($dataFilter);
         $pageData['page'] = $this->load->view("reports/pooja_reports_html", $data, TRUE);
         $this->response($pageData);
     }

@@ -10,7 +10,7 @@
                                             <input type="hidden" id="data_grid" name="data_grid">
                                             <input type="hidden" id="selected_id" name="selected_id">
 										    <div class="row">
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"> 
+                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12"> 
                                                     <span class="span_label "><?php echo $this->lang->line('receipt_book'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group">
                                                         <div class="input-group">
@@ -19,13 +19,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12"> 
+                                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12"> 
                                                     <span class="span_label "><?php echo $this->lang->line('total_pages'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group">
                                                         <input type="number" name="page" id="page" min="10" max="1000" class="form-control parsley-validated" data-required="true"/>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12"> 
+                                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12"> 
                                                     <span class="span_label "><?php echo $this->lang->line('rate_type'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group">
                                                         <select name="rate_type" id="rate_type" class="form-control parsley-validated" data-required="true">
@@ -34,29 +34,29 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12"> 
+                                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12"> 
                                                     <span class="span_label "><?php echo $this->lang->line('rate_per_page'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group">
                                                         <input type="number" min="0.0" step="0.1" name="rate" id="rate" class="form-control parsley-validated" data-required="true"/>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12"> 
+                                                <!-- <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12"> 
                                                     <span class="span_label "><?php echo $this->lang->line('book_type'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group">
                                                         <select name="book_type" id="book_type" class="form-control parsley-validated" data-required="true"></select>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" id="variableInputType"> 
-                                                    <span class="span_label "><?php echo $this->lang->line('pooja'); ?>/<?php echo $this->lang->line('prasadam'); ?><span class="asterisk">*</span></span>
+                                                </div> -->
+                                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12"> 
+                                                    <span class="span_label "><?php echo $this->lang->line('pooja'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group">
                                                     <select name="item" id="item" class="form-control"></select>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12"> <span class="span_label "><?php echo $this->lang->line('account_ledger'); ?><span class="asterisk">*</span></span>
+                                                <!-- <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12"> <span class="span_label "><?php echo $this->lang->line('account_ledger'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group accountselect">
                                                         <select name="account_name1" id="account_name1" class="form-control parsley-validated" data-required="true"></select>
                                                     </div>
-                                                </div>
+                                                </div> -->
 											</div>
                                             <div class="row ">
                                                 <div class="col-md-12 col-sm-12 col-12 ">
@@ -80,7 +80,7 @@
                                                         <th>Ledger</th>
                                                         <th><?php echo $this->lang->line('total_pages'); ?></th>
                                                         <th><?php echo $this->lang->line('rate_type'); ?></th>
-                                                        <th><?php echo $this->lang->line('rate_per_page'); ?></th>
+                                                        <th style="text-align:right"><?php echo $this->lang->line('rate_per_page'); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                                         <th><?php echo $this->lang->line('book_type'); ?></th>
                                                         <th><?php echo $this->lang->line('status'); ?></th>
                                                         <th><?php echo $this->lang->line('action'); ?></th>

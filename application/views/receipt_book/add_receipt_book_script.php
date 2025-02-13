@@ -1,22 +1,24 @@
 <?php $this->load->view('includes/main_script'); ?>
 <script type="text/javascript">
     var oTable;
-    var aoColumnDefs = [{
-        "aTargets": [3],
-        "mData": 3,
-        "mRender": function(data, type, row) {
-            if (data == 1) return "<a class='btn btn-warning btn-sm delete btn_active'>Active</a>";
-            else if (data != '') return "<a class='btn btn-default btn-sm delete btn_active'>Inactive</a>";
+    var aoColumnDefs = [
+        {
+            "aTargets": [3],
+            "mData": 3,
+            "mRender": function(data, type, row) {
+                if (data == 1) return "<a class='btn btn-warning btn-sm delete btn_active'>Active</a>";
+                else if (data != '') return "<a class='btn btn-default btn-sm delete btn_active'>Inactive</a>";
+            }
+        }, {
+            "aTargets": [4],
+            "mData": 3,
+            "mRender": function(data, type, row) {
+                var chert = "";
+                if (data == 0) chert = "<a style='cursor: pointer;color: #6464e8;' data-toggle='tooltip' class='del_btn_datatable' data-placement='right' data-original-title = '<?php echo $this->lang->line('delete_data'); ?>'>" + "<i class='fa fa-trash' aria-hidden='true'></i>" + "</a>";
+                return "<a style='cursor: pointer;' data-toggle='tooltip' class='edit_btn_datatable' data-placement='right' data-original-title = '<?php echo $this->lang->line('edit_data'); ?>'>" + "<i class='fa fa-edit '></i>" + "</a>" + "<a style='cursor: pointer;' data-toggle='tooltip' class='view_btn_datatable' data-placement='right' data-original-title = '<?php echo $this->lang->line('view_data'); ?>'>" + "<i class='fa fa-eye' aria-hidden='true'></i>" + "</a>" + chert;
+            }
         }
-    }, {
-        "aTargets": [4],
-        "mData": 3,
-        "mRender": function(data, type, row) {
-            var chert = "";
-            if (data == 0) chert = "<a style='cursor: pointer;color: #6464e8;' data-toggle='tooltip' class='del_btn_datatable' data-placement='right' data-original-title = '<?php echo $this->lang->line('delete_data'); ?>'>" + "<i class='fa fa-trash' aria-hidden='true'></i>" + "</a>";
-            return "<a style='cursor: pointer;' data-toggle='tooltip' class='edit_btn_datatable' data-placement='right' data-original-title = '<?php echo $this->lang->line('edit_data'); ?>'>" + "<i class='fa fa-edit '></i>" + "</a>" + "<a style='cursor: pointer;' data-toggle='tooltip' class='view_btn_datatable' data-placement='right' data-original-title = '<?php echo $this->lang->line('view_data'); ?>'>" + "<i class='fa fa-eye' aria-hidden='true'></i>" + "</a>" + chert;
-        }
-    }];
+    ];
     var action_url = $('#pos_receipt_book_items').attr('action_url');
     oTable = gridSFC('pos_receipt_book_items', action_url, aoColumnDefs);
     function get_scheduled_pooja_list(){

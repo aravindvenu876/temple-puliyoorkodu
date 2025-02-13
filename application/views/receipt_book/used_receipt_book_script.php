@@ -22,7 +22,7 @@
         $("#pos_receipt_book_used").dataTable().fnDraw();
     }
     $.ajax({
-        url: '<?php echo base_url() ?>service/Receipt_book_data/get_receiptbook_drop_down',
+        url: '<?php echo base_url('service/Receipt_book_data/get_receiptbook_drop_down') ?>',
         type: 'GET',
         success: function (data) {
             var string = '<option value="">Select Book</option>';
@@ -34,7 +34,7 @@
     });
     var poojaDropDownData = "";
     $.ajax({
-        url: '<?php echo base_url() ?>service/Pooja_data/get_pooja_drop_down',
+        url: '<?php echo base_url('service/Pooja_data/get_pooja_drop_down') ?>',
         type: 'GET',
         success: function (data) {
             var string = '';
@@ -44,7 +44,7 @@
         }
     });
     $.ajax({
-        url: '<?php echo base_url() ?>service/Rest_shared/get_amount_types_drop_down',
+        url: '<?php echo base_url('service/Rest_shared/get_amount_types_drop_down') ?>',
         type: 'GET',
         success: function (data) {
             var string = '<option value="">Select Type</option>';
@@ -55,25 +55,12 @@
         }
     });
     $.ajax({
-        url: '<?php echo base_url() ?>service/Account_basic_data/get_account_heads_drop_down',
-        type: 'GET',
-        async: false,
-        success: function(data) {
-            var string = '<option value="">Select Ledger</option>';
-            $.each(data.account_head, function(i, v) {
-                string += '<option value="' + v.id + '">' + v.head + '</option>';
-            });
-            $("#ledger").html(string);
-            // $('#ledger').select2({ width: '100%' });
-        }
-    });
-    $.ajax({
-        url: '<?php echo base_url() ?>service/Receipt_book_data/get_usedreceiptbook_drop_down',
+        url: '<?php echo base_url('service/Receipt_book_data/get_usedreceiptbook_drop_down') ?>',
         type: 'GET',
         success: function (data) {
             var string = '<option value="">Select Book</option>';
             $.each(data.id, function (i, v) {
-                string += '<option value="' + v.id + '">'+ v.book_no + '</option>';
+                string += '<option value="' + v.id + '">'+v.book+' - '+ v.book_no + '</option>';
             });
             $("#book").append(string);
         }

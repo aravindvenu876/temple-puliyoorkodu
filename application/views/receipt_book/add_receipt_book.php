@@ -5,14 +5,12 @@
                                 <div class="tab-pane active">
                                     <div class="add_dtl" style="display: none;">
                                         <form data-validate="parsley" action="" method="post" class="add-edit">
-               
-                                                    <h3 id="form_title_h2"><?php echo $this->lang->line('add_receipt_book_details'); ?></h3>
-													<hr class="hrCustom">
-                                
-                                                <input type="hidden" id="data_grid" name="data_grid">
-                                                <input type="hidden" id="selected_id" name="selected_id">
-                                                <div class="row">
-                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"> 
+                                            <h3 id="form_title_h2"><?php echo $this->lang->line('add_receipt_book_details'); ?></h3>
+                                            <hr class="hrCustom">
+                                            <input type="hidden" id="data_grid" name="data_grid">
+                                            <input type="hidden" id="selected_id" name="selected_id">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12"> 
                                                 <span class="span_label "><?php echo $this->lang->line('book_name'); ?><span class="asterisk">*</span></span>
                                                     <div class="form-group">
                                                         <select name="book" id="book" class="form-control parsley-validated" data-required="true"></select>
@@ -24,9 +22,10 @@
                                                         <input type="text" name="book_no" id="book_no"  class="Bookser_no form-control parsley-validated" data-required="true"/>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row ">
-                                                <div class="col-md-12 col-sm-12 col-12 ">
+                                            <!-- </div>
+                                            <div class="row "> -->
+                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12" style="text-align:right"> 
+                                                    <br>
                                                     <button class="btn btn-primary saveButton"><?php echo $this->lang->line('save'); ?></button> 
                                                     <a class="btn btn-default" id="cancelEdit"><?php echo $this->lang->line('cancel'); ?></a> 
                                                 </div>
@@ -34,9 +33,8 @@
                                         </form>
                                     </div>
                                     <div class="dtl_tbl show_form_add" style="min-height: auto;">
-
-                                                <h3><?php echo $this->lang->line('add_receipt_books'); ?></h3>
-                       <hr class="hrCustom">
+                                        <h3><?php echo $this->lang->line('add_receipt_books'); ?></h3>
+                                        <hr class="hrCustom">
                                         <div class="row">
                                             <div class="col-md-5 col-sm-5 col-12 calendar_iconless">
                                                 <span class="span_label"><?php echo $this->lang->line('receipt_book'); ?></span>
@@ -59,10 +57,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                                <button type="button" class="btn btn-warning btn_active btn-sm pull-right plus_btn btnPosition"><?php echo $this->lang->line('add_receipt_books'); ?></button>
- 
+                                        <button type="button" class="btn btn-warning btn_active btn-sm pull-right plus_btn btnPosition"><?php echo $this->lang->line('add_receipt_books'); ?></button>
                                         <div class="table-responsive table_div">
-                                            <table class="table list-data-table table-bordered scrolling table-striped table-sm" id="pos_receipt_book_items" table="pos_receipt_book_items" action_url="<?php echo base_url() ?>service/Receipt_book_data/new_book_details">
+                                            <table class="table list-data-table table-bordered scrolling table-striped table-sm" id="pos_receipt_book_items" table="pos_receipt_book_items" action_url="<?php echo base_url('service/Receipt_book_data/new_book_details') ?>">
                                                 <thead>
                                                     <tr class="bg-warning text-white ">
                                                         <th>ID</th>

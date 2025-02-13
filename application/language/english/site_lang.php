@@ -1158,8 +1158,8 @@ $lang['book_pages_count'] = "Book Pages Count";
 
 /* used_receipt_book */
 $lang['book'] = "Book";
-$lang['starting_pages_number_(used)'] = "Starting Pages Number(used)";
-$lang['end_pages_number(used)'] = "End Pages Number(used)";
+$lang['starting_pages_number_(used)'] = "Start Page";
+$lang['end_pages_number(used)'] = "End Pages";
 $lang['receipt_book_number'] = "Receipt Book Number";
 $lang['starting_Pages'] = "Starting Pages";
 $lang['ending_pages'] = "Ending Pages";
@@ -1226,3 +1226,8 @@ $lang['total_deposits'] = "Total Deposits";
 $lang['total_fd_varavu'] = "Total FD Varavu";
 
 $lang['dashboard_today_collection'] = 'Todays software receipt collection amount';
+
+
+$lang['pooja_rpt_rate'] = 'Rate';
+$lang['pooja_rpt_count'] = 'Total Pooja Count';
+$lang['pooja_rpt_amount'] = 'Total Amount';

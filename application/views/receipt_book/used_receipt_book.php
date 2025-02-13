@@ -13,60 +13,55 @@
                                  <input type="hidden" name="rate" id="rate"   class="form-control parsley-validated" data-required="true"/>
                                  <input type="hidden" readonly name="total_page_used" id="total_page_used"  class="form-control parsley-validated" data-required="true"/>
                                  <div class="row">
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                        <span class="span_label "><?php echo $this->lang->line('book'); ?><span class="asterisk">*</span></span>
                                        <div class="form-group">
                                           <select name="book" id="book" class="form-control parsley-validated" data-required="true"></select>
                                        </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                           <span class="span_label "><?php echo $this->lang->line('date'); ?><span class="asterisk">*</span></span>
                                           <div class="form-group">
                                              <input type="text" name="date" id="date" class="form-control parsley-validated" data-required="true" readonly=""/>
                                           </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                        <span class="span_label "><?php echo $this->lang->line('starting_pages_number_(used)'); ?><span class="asterisk">*</span></span>
                                        <div class="form-group">
-										  <select name="start_page_no" id="start_page_no" class="form-control parsley-validated" data-required="true"></select>
+										            <select name="start_page_no" id="start_page_no" class="form-control parsley-validated" data-required="true"></select>
                                        </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                        <span class="span_label "><?php echo $this->lang->line('end_pages_number(used)'); ?><span class="asterisk">*</span></span>
                                        <div class="form-group">
                                           <select name="end_page_no" id="end_page_no" class="form-control parsley-validated" data-required="true"></select>
                                        </div>
                                     </div>
-                                    <div  class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                        <span class="span_label"><?php echo $this->lang->line('amount'); ?></span>
                                        <div class="form-group">
                                           <input type="text" name="amount" value="" readonly  id="amount" class="form-control parsley-validated" data-required="true"/>
                                        </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                        <span class="span_label "><?php echo $this->lang->line('actual_amount'); ?><span class="asterisk">*</span></span>
                                        <div class="form-group">
                                          <input type="number" min="0.00" step="0.01" name="actual_amount" id="actual_amount"  class="form-control parsley-validated" data-required="true"/> 
                                        </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"> <span class="span_label "><?php echo $this->lang->line('Shortage/Excess'); ?><span class="asterisk">*</span></span>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                       <span class="span_label "><?php echo $this->lang->line('Shortage/Excess'); ?><span class="asterisk">*</span></span>
                                        <div class="form-group">
                                           <select name="type" id="type" class="form-control parsley-validated" data-required="true"></select>
                                        </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                        <span class="span_label "><?php echo $this->lang->line('Shortage/Excess_Amount'); ?> <span class="asterisk">*</span></span>
                                        <div class="form-group">
                                          <input type="number" min="0.00" step="0.01" name="excess_amount" id="excess_amount"  class="form-control parsley-validated" data-required="true"/> 
                                        </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-                                       <span class="span_label "><?php echo $this->lang->line('account_ledger'); ?><span class="asterisk">*</span></span>
-                                       <div class="form-group accountselect">
-                                          <select name="ledger" id="ledger" class="form-control parsley-validated" data-required="true"></select>
-                                       </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"> 
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                                        <span class="span_label "><?php echo $this->lang->line('mode_of_payment'); ?><span class="asterisk">*</span></span>
                                        <div class="form-group">
                                           <select name="payment_mode" id="payment_mode" class="form-control parsley-validated" data-required="true">
@@ -76,13 +71,13 @@
                                           </select>
                                        </div>
                                     </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 dynamic_pooja"></div>
                                     <div class="col-12">
                                        <span class="span_label "><?php echo $this->lang->line('remarks'); ?><span class="asterisk">*</span></span>
                                        <div class="form-group">
                                          <textarea  name="description" id="description"  class="form-control parsley-validated" data-required="true"/> </textarea>
                                        </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 dynamic_pooja"></div>
                                  </div>
                                  <div class="row ">
                                     <div class="col-md-12 col-sm-12 col-12 ">
