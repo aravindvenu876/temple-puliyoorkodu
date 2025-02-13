@@ -251,4 +251,11 @@ class Reports extends CI_Controller {
         $this->load->view('includes/footer');
     }
 
+    function pooja_reports_daily(){
+        $this->load->view('includes/header',$this->data);
+        $this->load->view('reports_new/daily_pooja_reports_page',$this->data);
+        $this->load->view('reports_new/daily_pooja_reports_script',$this->data);
+        $this->load->view('includes/footer');
+    }
+
 }

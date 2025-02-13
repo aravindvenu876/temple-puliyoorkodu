@@ -1,9 +1,9 @@
 <?php $this->load->view('includes/main_script'); ?>
 <script type="text/javascript">
    var date = new Date();
-  var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-   $('#from_date').datepicker({
+    var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    $('#from_date').datepicker({
         format: "dd-mm-yyyy",
         todayHighlight: true,
         autoclose: true
@@ -18,9 +18,6 @@
         var maxDate = new Date(selected.date.valueOf());
         $('#from_date').datepicker('setEndDate', maxDate);
     });
-    $(".btn_print_html").hide();
-    $(".pdf").hide();
-    get_reports();
     $.ajax({
         url: '<?php echo base_url() ?>service/Receipt_book_data/get_receiptbook_drop_down',
         type: 'GET',
@@ -39,6 +36,7 @@
         var from_date = $("#from_date").val();
         var to_date = $("#to_date").val();
         var type = $("#type").val();
+        $("#report_body").html('<tr><td colspan="10" style="text-align:center"><b>...Data...Loading...</b></td></tr>');
         $.ajax({
             url: '<?php echo base_url() ?>service/Reports_data/get_receiptbook_report',
             type: 'POST',
@@ -46,10 +44,7 @@
             success: function (data) {
                 reportData = "";
                 if (data.report.length === 0) {
-                    $(".btn_print_html").hide();
-                    $(".pdf").hide();
-                    $(".excel_report").hide();
-                    reportData += '<tr><td colspan="20" style="text-align:center"><b><?php echo $this->lang->line('no_records_found'); ?></b></td></tr>';
+                    reportData += '<tr><td colspan="10" style="text-align:center"><b><?php echo $this->lang->line('no_records_found'); ?></b></td></tr>';
                 }else{
                     $(".btn_print_html").show();
                     $(".pdf").show();
@@ -58,28 +53,22 @@
                     var total = 0;
                     $.each(data.report, function (i, v) {
                         j++;
-                        // $date_ex=$row->date;
-                        // $date=date("d-m-Y", strtotime($date_ex));
                         reportData += "<tr>";
                         reportData += "<td>"+j+"</td>";
                         reportData += "<td>"+convert_date(v.created_on)+"</td>";
                         reportData += "<td>"+v.book_eng+"</td>";
-                        reportData += "<td>"+v.book_type+"</td>";
                         reportData += "<td>"+v.book_no+"</td>";
                         reportData += "<td>"+v.start_page_no+"</td>";
                         reportData += "<td>"+v.end_page_no+"</td>";
                         reportData += "<td>"+v.total_page_used+"</td>";
+                        reportData += "<td>"+v.description+"</td>";
                         reportData += "<td style='text-align:right'>"+v.rate+"</td>";
                         reportData += "<td style='text-align:right'>"+v.actual_amount+"</td>";
-                        reportData += "<td>"+v.description+"</td>";
                         reportData += "</tr>";
                         total=+total+ +v.actual_amount;
                     }); 
-                    var total_rate= parseFloat(total,10).toFixed(2); 
-                    reportData += "<tr>";
-                    reportData += "<th colspan='9' style='text-align:right'><?php echo $this->lang->line('total_amount'); ?></th>";
-                    reportData += "<th style='text-align:right'>"+total_rate+"</th>";
-                    reportData += "<th colspan='1'></th></tr>";  
+                    reportData += "<tr><th colspan='9' style='text-align:right'><?php echo $this->lang->line('total_amount'); ?></th>";
+                    reportData += "<th style='text-align:right'>"+parseFloat(total,10).toFixed(2)+"</th></tr>";  
                 }
                 $("#report_body").html(reportData);
             }

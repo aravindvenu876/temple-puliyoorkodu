@@ -1230,4 +1230,4 @@ $lang['dashboard_today_collection'] = 'ഇന്നത്തെ സോഫ്റ�
 
 $lang['pooja_rpt_rate'] = 'തുക';
 $lang['pooja_rpt_count'] = 'പൂജയുടെ ആകെ എണ്ണം';
-$lang['pooja_rpt_amount'] = 'മൊത്തം തുകpoo';
+$lang['pooja_rpt_amount'] = 'മൊത്തം തുക';

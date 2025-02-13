@@ -30,8 +30,8 @@
                                             <div class="col-md-12 col-sm-12 col-12">
                                                 <button id="btn_submit" class="btn btn-primary saveButton"><?php echo $this->lang->line('filter'); ?></button>
                                                 <button class="btn btn-primary btn_print_html"><?php echo $this->lang->line('print'); ?></button>
-                                                <button class="btn btn-primary pdf">PDF</button>
-                                                <button class="btn btn-primary excel_report">Excel</button>
+                                                <!-- <button class="btn btn-primary pdf">PDF</button> -->
+                                                <!-- <button class="btn btn-primary excel_report">Excel</button> -->
                                                 <!-- <button class="btn btn-warning"><i class="fa fa-file-excel-o"></i></button> -->
                                                 <button class="btn btn-default btn_clear"><?php echo $this->lang->line('clear'); ?></button>
                                             </div>
@@ -43,14 +43,13 @@
                                                         <th><?php echo $this->lang->line('sl'); ?></th>
                                                         <th><?php echo $this->lang->line('date'); ?></th>
                                                         <th><?php echo $this->lang->line('book_name'); ?></th>
-                                                        <th><?php echo $this->lang->line('book_type'); ?></th>
                                                         <th><?php echo $this->lang->line('book_code'); ?></th>
                                                         <th><?php echo $this->lang->line('starting_pages_number_(used)'); ?></th>
                                                         <th><?php echo $this->lang->line('end_pages_number(used)'); ?></th>
                                                         <th><?php echo $this->lang->line('total_pages'); ?></th>
-                                                        <th><?php echo $this->lang->line('rate_per_page'); ?></th>
-                                                        <th><?php echo $this->lang->line('amount'); ?></th>
                                                         <th><?php echo $this->lang->line('description'); ?></th>
+                                                        <th style="text-align:right"><?php echo $this->lang->line('rate_per_page'); ?></th>
+                                                        <th style="text-align:right"><?php echo $this->lang->line('amount'); ?></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="report_body"></tbody>

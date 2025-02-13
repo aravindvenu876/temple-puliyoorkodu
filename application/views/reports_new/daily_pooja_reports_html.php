@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head>
-        <title>Pooja Report</title>
+        <title>Daily Pooja Report</title>
     </head>
     <body style="margin:30px 0;float:left;width:100%;" onload="window.print()">
         <div style="width:800px;margin:auto;float:none;padding:10px">
@@ -17,6 +17,8 @@
                     <tr>
                         <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Sl#</th>
                         <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja'); ?></th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('name'); ?></th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('star'); ?></th>
                         <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja_rpt_rate'); ?></th>
                         <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja_rpt_count'); ?></th>
                         <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja_rpt_amount'); ?></th>
@@ -30,6 +32,8 @@
                         echo "<tr>";
                         echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>".$i++."</td>";
                         echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->pooja</td>";
+                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->name</td>";
+                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->star</td>";
                         echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->rate</td>";
                         echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->quantity</td>";
                         echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->amount</td>";
@@ -37,7 +41,7 @@
                     } 
                     ?>
                      <tr>
-                        <th colspan='4' style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right">Total Amount</th>
+                        <th colspan='6' style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right">Total Amount</th>
                         <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right"><?php echo number_format((float)$total, 2, '.', ''); ?></th>
                     </tr>
                 </table>

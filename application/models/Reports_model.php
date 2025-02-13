@@ -78,6 +78,77 @@ class Reports_model extends CI_Model {
         return $this->db->group_by('opt_counter_receipt_details.pooja_master_id')->get()->result();
     }
 
+    function get_daily_pooja_report($filterData){
+        // if($filterData['counter'] != 'Web' ){
+        //     $this->db->select('opt_counter_receipt.receipt_date, opt_counter_receipt_details.name, opt_counter_receipt_details.phone,
+        //         opt_counter_receipt_details.pooja, opt_counter_receipt_details.star, opt_counter_receipt.receipt_no,
+        //         pooja_master_lang.pooja_name as pooja, opt_counter_receipt_details.amount, opt_counter_receipt.pooja_type,
+        //         users.name as user_name, opt_counter_receipt.pos_counter_id, pooja_master_lang.lang_id, opt_counter_receipt_details.date');
+        //     $this->db->from('opt_counter_receipt_details');
+        //     $this->db->join('opt_counter_receipt','opt_counter_receipt.id=opt_counter_receipt_details.receipt_id');
+        //     $this->db->join('counter_sessions','counter_sessions.id=opt_counter_receipt.session_id');
+        //     $this->db->join('users','users.id=opt_counter_receipt.user_id');
+        //     $this->db->join('pooja_master_lang','pooja_master_lang.pooja_master_id=opt_counter_receipt_details.pooja_master_id');
+        //     $this->db->where('opt_counter_receipt.receipt_type','Pooja');
+        //     $this->db->where('opt_counter_receipt.receipt_status','ACTIVE');
+        //     $this->db->where('pooja_master_lang.lang_id',$filterData['language']);
+        //     $this->db->where('opt_counter_receipt_details.date >=',$filterData['from_date']);
+        //     $this->db->where('opt_counter_receipt_details.date <=',$filterData['to_date']);
+        //     $this->db->where('opt_counter_receipt.temple_id',$filterData['temple_id']);
+        //     $this->db->order_by("opt_counter_receipt.receipt_no", "asc");
+        //     if($filterData['counter'] != '')
+        //         $this->db->where('counter_sessions.counter_id',$filterData['counter']);
+        //     if($filterData['user'] != '')
+        //         $this->db->where('opt_counter_receipt.user_id',$filterData['user']);
+        //     if($filterData['pooja'] != '')
+        //         $this->db->where('opt_counter_receipt_details.pooja_master_id',$filterData['pooja']);
+        //     return $this->db->get()->result();
+		// }else{
+		// 	$this->db->select('
+		// 		web_receipt_main.receipt_date,
+		// 		web_receipt_details.name,
+		// 		web_receipt_details.phone,
+		// 		web_receipt_details.pooja,
+		// 		web_receipt_details.star,
+		// 		web_receipt_main.receipt_no,
+		// 		pooja_master_lang.pooja_name as pooja,
+		// 		web_receipt_details.amount,
+		// 		web_receipt_main.pooja_type,
+		// 		0 as user_name,
+		// 		web_receipt_main.pos_counter_id,
+		// 		pooja_master_lang.lang_id
+		// 		');
+		// 	$this->db->from('web_receipt_details');
+		// 	$this->db->join('web_receipt_main','web_receipt_main.id = web_receipt_details.receipt_id');
+		// 	$this->db->join('pooja_master_lang','pooja_master_lang.pooja_master_id = web_receipt_details.pooja_master_id');
+		// 	$this->db->where('web_receipt_main.receipt_type','Pooja');
+		// 	$this->db->where('web_receipt_main.receipt_status','ACTIVE');
+		// 	$this->db->where('web_receipt_main.web_status','CONFIRMED');
+		// 	$this->db->where('pooja_master_lang.lang_id',$filterData['language']);
+        //     $this->db->where('web_receipt_details.date >=',$filterData['from_date']);
+        //     $this->db->where('web_receipt_details.date <=',$filterData['to_date']);
+		// 	$this->db->where('web_receipt_main.temple_id',$filterData['temple_id']);
+		// 	$this->db->order_by("receipt_no", "asc");
+		// 	if(isset($filterData['pooja'])){
+		// 		$this->db->where('receipt_details.pooja_master_id',$filterData['pooja']);
+		// 	}
+		// 	return $this->db->get()->result();
+		// }
+        $this->db->select('pooja_master_lang.pooja_name as pooja, opt_counter_receipt_details.amount, opt_counter_receipt_details.rate, opt_counter_receipt_details.quantity, opt_counter_receipt_details.star, opt_counter_receipt_details.name');
+        $this->db->from('opt_counter_receipt_details');
+        $this->db->join('opt_counter_receipt','opt_counter_receipt.id = opt_counter_receipt_details.receipt_id');
+        $this->db->join('pooja_master_lang','pooja_master_lang.pooja_master_id = opt_counter_receipt_details.pooja_master_id');
+        $this->db->where('opt_counter_receipt.receipt_type', 'Pooja');
+        $this->db->where('opt_counter_receipt.receipt_status', 'ACTIVE');
+        $this->db->where('pooja_master_lang.lang_id', $filterData['language']);
+        $this->db->where('opt_counter_receipt_details.date >=', $filterData['from_date']);
+        $this->db->where('opt_counter_receipt_details.date <=', $filterData['to_date']);
+        $this->db->where('opt_counter_receipt.temple_id', $filterData['temple_id']);
+        if(isset($filterData['pooja']) && $filterData['pooja'] != '')
+            $this->db->where('opt_counter_receipt_details.pooja_master_id',$filterData['pooja']);
+        return $this->db->get()->result();
+    }
+
     function get_collection_report($filterData){
         $this->db->select(
 			'receipt.receipt_no,receipt.receipt_type,receipt.receipt_status,receipt.receipt_date,
