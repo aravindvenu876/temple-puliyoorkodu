@@ -16,16 +16,16 @@
             <div style="float:left;width:100%; ;margin-bottom:10px; margin-top: 20px;">
                 <table style="float:left;width:100%;border:1px solid #dedede;border-spacing:0;;">
                     <tr>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Sl#</th>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Date</th>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Book</th>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Book No</th>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Start Page</th>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">End Page</th>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Total Page</th>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Description</th>
-                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Rate per page</th>
-                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Total amount</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Sl#</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Date</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Book</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Book No</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Start Page</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">End Page</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Total Page</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Description</th>
+                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Rate per page</th>
+                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Total amount</th>
                         
                     </tr>
                     <?php 
@@ -37,16 +37,16 @@
                         $date_ex=$row->created_on;
                         $date=date("d-m-Y", strtotime($date_ex));
                         echo "<tr>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$i</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$date</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->book_eng</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->book_no</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->start_page_no</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->end_page_no</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->total_page_used</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->description</td>";
-                        echo "<td style='text-align:right;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->rate</td>";
-                        echo "<td style='text-align:right;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->actual_amount</td>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$i</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$date</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->book_eng</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->book_no</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->start_page_no</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->end_page_no</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->total_page_used</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->description</th>";
+                        echo "<th style='text-align:right;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->rate</th>";
+                        echo "<th style='text-align:right;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->actual_amount</th>";
                         echo "</tr>";
                     } 
                     ?>  

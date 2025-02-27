@@ -15,11 +15,11 @@
             <div style="float:left;width:100%; ;margin-bottom:10px; margin-top: 20px;">
                 <table style="float:left;width:100%;border:1px solid #dedede;border-spacing:0;;">
                     <tr>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;">Sl#</th>
-                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja'); ?></th>
-                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja_rpt_rate'); ?></th>
-                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja_rpt_count'); ?></th>
-                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;"><?php echo $this->lang->line('pooja_rpt_amount'); ?></th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;">Sl#</th>
+                        <th style="text-align:left;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;"><?php echo $this->lang->line('pooja'); ?></th>
+                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;"><?php echo $this->lang->line('pooja_rpt_rate'); ?></th>
+                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;"><?php echo $this->lang->line('pooja_rpt_count'); ?></th>
+                        <th style="text-align:right;font-size:13px;padding:5px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;height: 40px;"><?php echo $this->lang->line('pooja_rpt_amount'); ?></th>
 
                     </tr>
                     <?php 
@@ -28,11 +28,11 @@
                     foreach($report as $row){
                         $total = $total + $row->amount; 
                         echo "<tr>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>".$i++."</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->pooja</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->rate</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->quantity</td>";
-                        echo "<td style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->amount</td>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>".$i++."</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;'>$row->pooja</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->rate</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->quantity</th>";
+                        echo "<th style='text-align:left;font-size:12px;padding:2px;border-bottom:1px solid #dedede;border-right:1px solid #dedede;text-align:right'>$row->amount</th>";
                         echo "</tr>";
                     } 
                     ?>
